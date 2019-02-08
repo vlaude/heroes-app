@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from './services/chat.service';
 
-import { distinctUntilChanged, filter, scan, throttleTime } from 'rxjs/operators';
-import * as moment from 'moment';
+import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
+import { Message } from './models/message';
 
 @Component({
   selector: 'app-root',
@@ -11,25 +11,27 @@ import * as moment from 'moment';
 })
 export class AppComponent implements OnInit {
   message: string;
-  messages: string[] = [];
+  messages: Message[] = [];
 
   constructor(private chatService: ChatService) {}
 
   sendMessage() {
-    this.chatService.sendMessage(this.message);
+    this.chatService.sendMessage({ timeStamp: new Date(), message: this.message });
     this.message = '';
   }
 
   ngOnInit(): void {
+    this.chatService.getMessagesHistory().pipe(
+      flatMap((message) => message)
+    ).subscribe(messages => this.messages.push(messages));
+
     this.chatService
       .getMessages().pipe(
       distinctUntilChanged(),
       // filter((message: string) => message.trim().length > 0),
       throttleTime(500),
-    ).subscribe((message: string) => {
-      const currentTime = moment().format('hh:mm:ss a');
-      const messageWithTimestamp = `${currentTime}: ${message}`;
-      this.messages.push(messageWithTimestamp);
+    ).subscribe((message: Message) => {
+      this.messages.push(message);
     });
   }
 
