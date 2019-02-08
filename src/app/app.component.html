@@ -1,8 +1,18 @@
-<div *ngFor="let messageObject of messages">
-  {{ messageObject.timeStamp }}
-  -
-  {{ messageObject.message }}
-</div>
+<div class="container">
+  <h1 class="mb-5">Ginger Chat</h1>
 
-<input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()"/>
-<button (click)="sendMessage()">Send</button>
+  <div *ngFor="let messageObject of messages">
+    <strong>{{ messageObject.timeStamp | date: 'MMM d, y, h:mm:ss a' }}</strong>
+    -
+    {{ messageObject.message }}
+  </div>
+
+  <div class="input-group mt-3 mb-3">
+    <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()"
+           type="text" class="form-control" placeholder="Say something!" aria-label="Say something!" aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="sendMessage()">Poster</button>
+    </div>
+  </div>
+
+</div>

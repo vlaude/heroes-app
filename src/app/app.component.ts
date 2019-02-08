@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   constructor(private chatService: ChatService) {}
 
   sendMessage() {
+    if (this.message.trim().length === 0) { return; }
     this.chatService.sendMessage({ timeStamp: new Date(), message: this.message });
     this.message = '';
   }
