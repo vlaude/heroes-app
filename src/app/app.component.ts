@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from './services/chat.service';
+
+import { distinctUntilChanged, filter, scan, throttleTime } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -19,10 +22,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.chatService
-      .getMessages()
-      .subscribe((message: string) => {
-        this.messages.push(message);
-      });
+      .getMessages().pipe(
+      distinctUntilChanged(),
+      // filter((message: string) => message.trim().length > 0),
+      throttleTime(500),
+    ).subscribe((message: string) => {
+      const currentTime = moment().format('hh:mm:ss a');
+      const messageWithTimestamp = `${currentTime}: ${message}`;
+      this.messages.push(messageWithTimestamp);
+    });
   }
 
 }
