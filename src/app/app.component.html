@@ -1,13 +1,22 @@
 <div class="container">
-  <h1 class="mb-5">Ginger Chat</h1>
+  <h1 class="mt-3 mb-5">Chow's Chat</h1>
 
   <div *ngFor="let messageObject of messages">
-    <strong>{{ messageObject.timeStamp | date: 'MMM d, y, h:mm:ss a' }}</strong>
+    <strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>
     -
+    <em class="pr-3 username"><strong>{{ messageObject.poster || 'visitor' | uppercase }}</strong> says:</em>
     {{ messageObject.message }}
   </div>
 
   <div class="input-group mt-3 mb-3">
+    <div class="input-group-prepend">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        as <strong>{{ username$ | async }}</strong>
+      </button>
+      <div class="dropdown-menu">
+        <input [(ngModel)]="username" type="text" class="form-control" placeholder="Change username" (keyup)="$event.keyCode == 13 && changeUsername()">
+      </div>
+    </div>
     <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()"
            type="text" class="form-control" placeholder="Say something!" aria-label="Say something!" aria-describedby="button-addon2">
     <div class="input-group-append">

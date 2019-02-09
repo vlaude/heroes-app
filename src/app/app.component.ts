@@ -3,6 +3,11 @@ import { ChatService } from './services/chat.service';
 
 import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
 import { Message } from './models/message';
+import { Select, Store } from '@ngxs/store';
+import { AppState } from './state/app.state';
+import { Observable } from 'rxjs';
+import { SetUsername } from './app.action';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +15,25 @@ import { Message } from './models/message';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @Select(AppState.getUsername) username$: Observable<string>;
+  username: string;
   message: string;
   messages: Message[] = [];
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private store: Store,
+    private chatService: ChatService
+  ) {}
 
   sendMessage() {
     if (this.message.trim().length === 0) { return; }
-    this.chatService.sendMessage({ timeStamp: new Date(), message: this.message });
-    this.message = '';
+    let poster;
+    this.username$.subscribe(username => {
+      poster = username;
+      this.chatService.sendMessage({ timeStamp: new Date(), message: this.message, poster});
+      this.username = '';
+      this.message = '';
+    });
   }
 
   ngOnInit(): void {
@@ -34,6 +49,12 @@ export class AppComponent implements OnInit {
     ).subscribe((message: Message) => {
       this.messages.push(message);
     });
+  }
+
+  changeUsername() {
+    this.store.dispatch(new SetUsername(this.username));
+    this.username = '';
+    $('.dropdown-toggle').click();
   }
 
 }

@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 import { ChatService } from './services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxsModule } from '@ngxs/store';
+import { AppState } from './state/app.state';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -15,7 +19,13 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxsModule.forRoot([
+      AppState
+    ], {
+      developmentMode: !environment.production
+    }),
+    NgxsLoggerPluginModule.forRoot(),
   ],
   providers: [ChatService],
   bootstrap: [AppComponent]
