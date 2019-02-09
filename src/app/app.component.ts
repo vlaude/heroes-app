@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from './services/chat.service';
 
 import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
@@ -14,11 +14,13 @@ import * as $ from 'jquery';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
   @Select(AppState.getUsername) username$: Observable<string>;
   username: string;
   message: string;
   messages: Message[] = [];
+
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   constructor(
     private store: Store,
@@ -55,6 +57,14 @@ export class AppComponent implements OnInit {
     this.store.dispatch(new SetUsername(this.username));
     this.username = '';
     $('.dropdown-toggle').click();
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
   }
 
 }

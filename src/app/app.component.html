@@ -1,14 +1,16 @@
 <div class="container">
   <h1 class="mt-3 mb-5">Chow's Chat</h1>
 
-  <div *ngFor="let messageObject of messages">
-    <strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>
-    -
-    <em class="pr-3 username"><strong>{{ messageObject.poster || 'visitor' | uppercase }}</strong> says:</em>
-    {{ messageObject.message }}
+  <div class="chat-box" #scrollMe>
+    <div *ngFor="let messageObject of messages" >
+      <strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>
+      -
+      <em class="pr-3 username"><strong>{{ messageObject.poster || 'visitor' | uppercase }}</strong> says:</em>
+      {{ messageObject.message }}
+    </div>
   </div>
 
-  <div class="input-group mt-3 mb-3">
+  <div class="input-group mt-3 mb-3 chat-input">
     <div class="input-group-prepend">
       <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         as <strong>{{ username$ | async }}</strong>
