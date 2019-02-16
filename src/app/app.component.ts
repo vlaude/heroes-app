@@ -2,7 +2,7 @@ import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@ang
 import { ChatService } from './services/chat.service';
 
 import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
-import { Message } from './models/message';
+import { Message } from './models/message.model';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from './state/app.state';
 import { Observable } from 'rxjs';

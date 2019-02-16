@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Message } from '../models/message';
+import { Message } from '../models/message.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private url = 'https://vlaude-heroes-api.herokuapp.com/';
+  private url = 'https://vlaude-heroes-api.herokuapp.com';
   private socket;
 
   constructor(private http: HttpClient) {
@@ -20,7 +20,7 @@ export class ChatService {
   }
 
   public getMessagesHistory = (): Observable<Message[]> => {
-    return this.http.get<Message[]>(`${this.url}api/v1/messages`);
+    return this.http.get<Message[]>(`${this.url}/api/v1/messages`);
   }
 
   public getMessages = () => {

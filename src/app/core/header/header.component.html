@@ -1,14 +1,80 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Heroes</a>
-  <span class="navbar-text mr-auto">( v{{ version }} )</span>
+  <div>
+    <a class="navbar-brand" href="#">Heroes</a>
+    <span class="navbar-text">( v{{ version }} )</span>
+  </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarToggler">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="navbar-text">
-        Test !
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-light mr-3">Sign In</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#registerModal">Register</button>
       </li>
     </ul>
   </div>
 </nav>
+
+<!-- Register modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm">
+          <!-- Username -->
+          <div class="form-group">
+            <label for="usernameInput"><strong>Username</strong></label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">@</div>
+              </div>
+              <input class="form-control" id="usernameInput" placeholder="Choose a Username"
+                     required
+                     formControlName="username" />
+            </div>
+            <div *ngIf="registerForm.controls.username.errors?.forbiddenName" class="form-error">
+              Use this username is not possible.
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="form-group">
+            <label for="emailInput">Email (optional)</label>
+            <input type="email" class="form-control" id="emailInput" placeholder="Enter your email"
+                   formControlName="email" />
+          </div>
+          <!-- Password -->
+          <div class="form-group">
+            <label for="passwordInput"><strong>Password</strong></label>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Choose a password"
+                   required
+                   formControlName="password" />
+          </div>
+          <!-- Confirm password -->
+          <div class="form-group">
+            <label for="confirmPasswordInput"><strong>Confirm password</strong></label>
+            <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Confirm your password"
+                   required
+                   formControlName="confirmPassword" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary"
+                (click)="onRegisterFromSubmit()"
+                [disabled]="true">
+          Register
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
