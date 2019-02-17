@@ -3,6 +3,8 @@ import { environment } from '../../../environments/environment';
 import { FormBuilder, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from '../../shared/forbidden-name-validator.directive';
 import { matchOtherValidator } from '../../shared/match-other-validator.directive';
+import { RegisterUser } from '../../models/register-user.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,10 @@ import { matchOtherValidator } from '../../shared/match-other-validator.directiv
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService
+  ) { }
   public version: string = environment.VERSION;
 
   registerFormSubmitted = false;
@@ -39,8 +44,12 @@ export class HeaderComponent implements OnInit {
 
   onRegisterFromSubmit() {
     this.registerFormSubmitted = true;
-    console.log(this.registerForm);
-    console.log(this.registerForm.value);
+    const registerUser: RegisterUser = {
+      username: this.registerForm.value.username,
+      email: this.registerForm.value.email || null,
+      password: this.registerForm.value.password
+    };
+    this.userService.registerUser(registerUser).subscribe(console.log);
   }
 
 }

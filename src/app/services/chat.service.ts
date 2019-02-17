@@ -8,7 +8,7 @@ import { Message } from '../models/message.model';
   providedIn: 'root'
 })
 export class ChatService {
-  private url = 'https://vlaude-heroes-api.herokuapp.com';
+  private url = 'http://localhost:3000';
   private socket;
 
   constructor(private http: HttpClient) {
