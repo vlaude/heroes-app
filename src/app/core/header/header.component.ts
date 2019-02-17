@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { FormBuilder, Validators } from '@angular/forms';
-import { forbiddenNameValidator } from '../../shared/forbidden-name.directive';
+import { forbiddenNameValidator } from '../../shared/forbidden-name-validator.directive';
+import { matchOtherValidator } from '../../shared/match-other-validator.directive';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,8 @@ import { forbiddenNameValidator } from '../../shared/forbidden-name.directive';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  constructor(private fb: FormBuilder) { }
   public version: string = environment.VERSION;
 
   registerFormSubmitted = false;
@@ -20,11 +23,16 @@ export class HeaderComponent implements OnInit {
       forbiddenNameValidator(['admin', 'administrator', 'administrateur', 'god', 'root', 'chow', 'vlaude'])
     ]],
     email: [''],
-    password: ['', Validators.required],
-    confirmPassword: ['', Validators.required]
+    password: ['', [
+      Validators.required,
+      Validators.minLength(6),
+    ]],
+    repeat: ['', [
+      Validators.required,
+      Validators.minLength(6),
+      matchOtherValidator('password')
+    ]]
   });
-
-  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }
@@ -32,6 +40,7 @@ export class HeaderComponent implements OnInit {
   onRegisterFromSubmit() {
     this.registerFormSubmitted = true;
     console.log(this.registerForm);
+    console.log(this.registerForm.value);
   }
 
 }
