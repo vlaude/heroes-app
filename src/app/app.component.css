@@ -1,6 +1,12 @@
+.chat {
+  position: absolute;
+  top: 75px;
+  bottom: 135px;
+}
+
 .chat-box {
+  max-height: 100%;
   overflow: auto;
-  max-height: 600px;
 }
 
 .username {
