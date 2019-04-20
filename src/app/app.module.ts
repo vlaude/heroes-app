@@ -13,24 +13,19 @@ import { environment } from '../environments/environment';
 import { HeaderComponent } from './core/header/header.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgxsModule.forRoot([
-      AppState
-    ], {
-      developmentMode: !environment.production
-    }),
-    NgxsLoggerPluginModule.forRoot(),
-  ],
-  providers: [ChatService],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, HeaderComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgxsModule.forRoot([AppState], {
+            developmentMode: !environment.production,
+        }),
+        NgxsLoggerPluginModule.forRoot(),
+    ],
+    providers: [ChatService],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,5 @@
 export interface Message {
-  timeStamp?: Date;
-  message: string;
-  poster?: string;
+    timeStamp?: Date;
+    message: string;
+    poster?: string;
 }
