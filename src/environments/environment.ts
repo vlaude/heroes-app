@@ -5,6 +5,7 @@
 export const environment = {
     production: false,
     VERSION: require('../../package.json').version,
+    HEROES_API_URL: 'http://localhost:3000',
 };
 
 /*

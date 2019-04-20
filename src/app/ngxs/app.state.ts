@@ -1,29 +1,30 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { SetUsername } from '../app.action';
+import { User } from '../models/user.model';
+import { SetCurrentUser } from './app.action';
 
 export class AppStateModel {
-    username: string;
+    currentUser: User;
 }
 
 @State<AppStateModel>({
     name: 'app',
     defaults: {
-        username: 'visitor',
+        currentUser: null,
     },
 })
 export class AppState {
     @Selector()
-    static getUsername(state: AppStateModel) {
-        return state.username;
+    static getCurrentUser(state: AppStateModel) {
+        return state.currentUser;
     }
 
-    @Action(SetUsername)
+    @Action(SetCurrentUser)
     setUsername(
         { patchState }: StateContext<AppStateModel>,
-        { payload }: SetUsername
+        { payload }: SetCurrentUser
     ) {
         patchState({
-            username: payload,
+            currentUser: payload,
         });
     }
 }

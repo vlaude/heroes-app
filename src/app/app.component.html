@@ -1,63 +1,65 @@
-<app-header></app-header>
+<!--<app-header></app-header>-->
 
-<div class="container chat">
-    <h1 class="pb-2">Chow's Chat</h1>
+<!--<div class="container chat">-->
+<!--<h1 class="pb-2">Chow's Chat</h1>-->
 
-    <div class="chat-box" #scrollMe>
-        <div *ngFor="let messageObject of messages">
-            <strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>
-            -
-            <em class="pr-3 username"
-                ><strong>{{
-                    messageObject.poster || 'visitor' | uppercase
-                }}</strong>
-                says:</em
-            >
+<!--<div class="chat-box" #scrollMe>-->
+<!--<div *ngFor="let messageObject of messages">-->
+<!--<strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>-->
+<!-- - -->
+<!--<em class="pr-3 username"-->
+<!--&gt;<strong>{{-->
+<!--messageObject.poster || 'visitor' | uppercase-->
+<!--}}</strong>-->
+<!--says:</em-->
+<!--&gt;-->
 
-            {{ messageObject.message }}
-        </div>
-    </div>
+<!--{{ messageObject.message }}-->
+<!--</div>-->
+<!--</div>-->
 
-    <div class="input-group mt-3 mb-3 chat-input">
-        <div class="input-group-prepend">
-            <button
-                class="btn btn-outline-secondary dropdown-toggle"
-                type="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-            >
-                as <strong>{{ username$ | async }}</strong>
-            </button>
-            <div class="dropdown-menu">
-                <input
-                    [(ngModel)]="username"
-                    type="text"
-                    class="form-control"
-                    placeholder="Change username"
-                    (keyup)="$event.keyCode == 13 && changeUsername()"
-                />
-            </div>
-        </div>
-        <input
-            [(ngModel)]="message"
-            (keyup)="$event.keyCode == 13 && sendMessage()"
-            type="text"
-            class="form-control"
-            placeholder="Say something!"
-            aria-label="Say something!"
-            aria-describedby="button-addon2"
-        />
-        <div class="input-group-append">
-            <button
-                class="btn btn-outline-secondary"
-                type="button"
-                id="button-addon2"
-                (click)="sendMessage()"
-            >
-                Poster
-            </button>
-        </div>
-    </div>
-</div>
-<!-- container -->
+<!--<div class="input-group mt-3 mb-3 chat-input">-->
+<!--<div class="input-group-prepend">-->
+<!--<button-->
+<!--class="btn btn-outline-secondary dropdown-toggle"-->
+<!--type="button"-->
+<!--data-toggle="dropdown"-->
+<!--aria-haspopup="true"-->
+<!--aria-expanded="false"-->
+<!--&gt;-->
+<!--as <strong>{{ username$ | async }}</strong>-->
+<!--</button>-->
+<!--<div class="dropdown-menu">-->
+<!--<input-->
+<!--[(ngModel)]="username"-->
+<!--type="text"-->
+<!--class="form-control"-->
+<!--placeholder="Change username"-->
+<!--(keyup)="$event.keyCode == 13 && changeUsername()"-->
+<!--/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<input-->
+<!--[(ngModel)]="message"-->
+<!--(keyup)="$event.keyCode == 13 && sendMessage()"-->
+<!--type="text"-->
+<!--class="form-control"-->
+<!--placeholder="Say something!"-->
+<!--aria-label="Say something!"-->
+<!--aria-describedby="button-addon2"-->
+<!--/>-->
+<!--<div class="input-group-append">-->
+<!--<button-->
+<!--class="btn btn-outline-secondary"-->
+<!--type="button"-->
+<!--id="button-addon2"-->
+<!--(click)="sendMessage()"-->
+<!--&gt;-->
+<!--Poster-->
+<!--</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; container &ndash;&gt;-->
+
+<router-outlet></router-outlet>

@@ -3,16 +3,18 @@ import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '../models/message.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ChatService {
-    private url = 'http://localhost:3000';
+    private url = `${environment.HEROES_API_URL}/api/v1`;
     private socket;
 
     constructor(private http: HttpClient) {
-        this.socket = io(this.url);
+        // TODO Adapter url
+        this.socket = io(environment.HEROES_API_URL);
     }
 
     public sendMessage(message) {
@@ -20,7 +22,7 @@ export class ChatService {
     }
 
     public getMessagesHistory = (): Observable<Message[]> => {
-        return this.http.get<Message[]>(`${this.url}/api/v1/messages`);
+        return this.http.get<Message[]>(`${this.url}/messages`);
     };
 
     public getMessages = () => {

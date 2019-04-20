@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-lg-6 col-sm-10">
+            <div class="card border-dark mt-5">
+                <div class="card-header text-white bg-dark border-dark">
+                    <h5>Login</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm">
+                        <!-- Username -->
+                        <div class="form-group">
+                            <label for="usernameInput">Username</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">@</div>
+                                </div>
+                                <input
+                                    class="form-control"
+                                    id="usernameInput"
+                                    placeholder="Username"
+                                    required
+                                    formControlName="username"
+                                />
+                            </div>
+                        </div>
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="passwordInput">Password</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="passwordInput"
+                                placeholder="Password"
+                                required
+                                formControlName="password"
+                            />
+                        </div>
+                    </form>
+                </div>
+                <!-- card-body -->
+                <div class="card-footer border-dark">
+                    <button
+                        type="button"
+                        routerLink="/register"
+                        class="btn btn-primary"
+                    >
+                        Register
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-success ml-2"
+                        (click)="onLoginFormSubmit()"
+                    >
+                        Login
+                    </button>
+                </div>
+            </div>
+            <!-- card -->
+        </div>
+        <!-- col -->
+        <div class="col"></div>
+    </div>
+</div>

@@ -10,9 +10,9 @@ import { ChatService } from './services/chat.service';
 import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
 import { Message } from './models/message.model';
 import { Select, Store } from '@ngxs/store';
-import { AppState } from './state/app.state';
+import { AppState } from './ngxs/app.state';
 import { Observable } from 'rxjs';
-import { SetUsername } from './app.action';
+import { SetUsername } from './ngxs/app.action';
 import * as $ from 'jquery';
 
 @Component({
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     message: string;
     messages: Message[] = [];
 
-    @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+    // @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
     constructor(private store: Store, private chatService: ChatService) {}
 
@@ -76,6 +76,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
 
     scrollToBottom(): void {
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        // this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     }
 }
