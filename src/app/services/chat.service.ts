@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
     providedIn: 'root',
 })
 export class ChatService {
-    private url = `${environment.HEROES_API_URL}/api/v1`;
+    private url = `${environment.HEROES_API_URL}/api/v1/messages`;
     private socket;
 
     constructor(private http: HttpClient) {
@@ -22,7 +22,7 @@ export class ChatService {
     }
 
     public getMessagesHistory = (): Observable<Message[]> => {
-        return this.http.get<Message[]>(`${this.url}/messages`);
+        return this.http.get<Message[]>(this.url);
     };
 
     public getMessages = () => {

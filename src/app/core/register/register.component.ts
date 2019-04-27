@@ -7,7 +7,6 @@ import { RegisterUser } from '../../models/register-user.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@ngxs/store';
-import { SetCurrentUser } from '../../ngxs/app.action';
 
 @Component({
     selector: 'app-register',
@@ -64,13 +63,13 @@ export class RegisterComponent implements OnInit {
             password: this.registerForm.value.password,
         };
         this.userService.registerUser(registerUser).subscribe(
-            response => {
+            () => {
                 this.registerFormSubmitted = false;
-                this.store.dispatch(new SetCurrentUser(response.user));
                 this.toastr.info('Vous êtes enregistré');
                 this.router.navigate(['/login']);
             },
             error => {
+                this.registerFormSubmitted = false;
                 this.toastr.error(error.message);
             }
         );

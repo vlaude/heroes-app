@@ -12,7 +12,6 @@ import { Message } from './models/message.model';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from './ngxs/app.state';
 import { Observable } from 'rxjs';
-import { SetUsername } from './ngxs/app.action';
 import * as $ from 'jquery';
 
 @Component({
@@ -21,7 +20,7 @@ import * as $ from 'jquery';
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewChecked {
-    @Select(AppState.getUsername) username$: Observable<string>;
+    @Select(AppState.getCurrentUser) username$: Observable<string>;
     username: string;
     message: string;
     messages: Message[] = [];
@@ -66,7 +65,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
 
     changeUsername() {
-        this.store.dispatch(new SetUsername(this.username));
+        // this.store.dispatch(new SetUsername(this.username));
         this.username = '';
         $('.dropdown-toggle').click();
     }

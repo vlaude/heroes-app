@@ -8,11 +8,11 @@ import { environment } from '../../environments/environment';
     providedIn: 'root',
 })
 export class UserService {
-    private url = `${environment.HEROES_API_URL}/api/v1`;
+    private url = `${environment.HEROES_API_URL}/api/v1/users`;
 
     constructor(private http: HttpClient) {}
 
     registerUser(user: RegisterUser): Observable<any> {
-        return this.http.post(`${this.url}/users`, user);
+        return this.http.post(this.url, user);
     }
 }
