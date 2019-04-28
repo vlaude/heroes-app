@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
         this.userService.registerUser(registerUser).subscribe(
             () => {
                 this.registerFormSubmitted = false;
-                this.toastr.info('Vous êtes enregistré');
+                this.toastr.info('You are registered');
                 this.router.navigate(['/login']);
             },
             error => {

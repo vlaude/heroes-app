@@ -1,3 +1,36 @@
-<p>
-    chat works!
-</p>
+<div class="chat border">
+    <div class="chat__messages pb-3" #scrollMe>
+        <div *ngFor="let messageObject of messages">
+            <strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>
+            -
+            <em class="pr-3 username"
+                ><strong>{{
+                    messageObject.poster || 'visitor' | uppercase
+                }}</strong>
+                says:</em
+            >
+
+            {{ messageObject.message }}
+        </div>
+    </div>
+    <!-- chat messages -->
+    <div class="input-group">
+        <input
+            [(ngModel)]="newMessage"
+            (keyup)="$event.keyCode == 13 && sendMessage()"
+            type="text"
+            class="form-control"
+            placeholder="Say something"
+        />
+        <div class="input-group-append">
+            <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="sendMessage()"
+            >
+                Send
+            </button>
+        </div>
+    </div>
+    <!-- chat input -->
+</div>

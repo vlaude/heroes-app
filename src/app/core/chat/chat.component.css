@@ -1,0 +1,12 @@
+.chat {
+    position: absolute;
+    width: 100%;
+    height: -webkit-fill-available;
+    padding: 10px;
+    background: #f5f5f5
+}
+
+.chat__messages {
+    overflow: auto;
+    max-height: calc(100% - 40px);
+}
