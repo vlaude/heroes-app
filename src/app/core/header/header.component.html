@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div>
-        <a class="navbar-brand" href="#">Heroes</a>
+        <a class="navbar-brand" routerLink="">Heroes</a>
         <span class="navbar-text">( v{{ version }} )</span>
     </div>
     <button
@@ -15,6 +15,28 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarToggler">
-        <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <!-- Profile -->
+            <li class="nav-item dropdown" *ngIf="isAuthenticated()">
+                <a
+                    class="nav-link dropdown-toggle username"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    {{ (currentUser$ | async)?.username }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item disabled">Profile</a>
+                    <a class="dropdown-item disabled">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item sign-out" (click)="signOut()">Deconnexion</a>
+                </div>
+            </li>
+        </ul>
     </div>
+    <!-- navbar collapse -->
 </nav>

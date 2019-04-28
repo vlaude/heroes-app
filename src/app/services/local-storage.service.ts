@@ -23,4 +23,8 @@ export class LocalStorageService {
     isAuthenticated(): boolean {
         return !isNullOrUndefined(this.getCurrentUser());
     }
+
+    signOut() {
+        localStorage.clear();
+    }
 }

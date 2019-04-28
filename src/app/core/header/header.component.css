@@ -1,0 +1,19 @@
+.dropdown-item {
+    cursor: pointer;
+}
+
+.username {
+    color: #eeeeee !important;
+}
+
+.disabled {
+    color: #bdbdbd !important;
+}
+
+.sign-out {
+    color: red !important;
+}
+
+.sign-out:active {
+    background: none;
+}

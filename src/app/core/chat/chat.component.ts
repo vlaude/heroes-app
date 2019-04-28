@@ -1,10 +1,4 @@
-import {
-    AfterViewChecked,
-    Component,
-    ElementRef,
-    OnInit,
-    ViewChild,
-} from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Message } from '../../models/message.model';
 import { ChatService } from '../../services/chat.service';
 import { Select, Store } from '@ngxs/store';
@@ -12,6 +6,7 @@ import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
 import { AppState } from '../../ngxs/app.state';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'app-chat',
@@ -56,6 +51,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }
         let poster;
         this.user$.subscribe(user => {
+            if (isNullOrUndefined(user)) {
+                return;
+            }
             poster = user.username;
             this.chatService.sendMessage({
                 timeStamp: new Date(),
