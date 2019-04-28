@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col"></div>
         <div class="col-lg-6 col-sm-10">
-            <div class="card border-dark mt-5">
+            <div class="card border-dark" style="margin-top: 5rem">
                 <div class="card-header text-white bg-dark border-dark">
                     <h5>Register</h5>
                 </div>
@@ -23,19 +23,12 @@
                                     formControlName="username"
                                 />
                             </div>
-                            <div
-                                *ngIf="
-                                    registerForm.controls.username.errors
-                                        ?.forbiddenName
-                                "
-                                class="form-error"
-                            >
+                            <div *ngIf="registerForm.controls.username.errors?.forbiddenName" class="form-error">
                                 Use this username is not possible
                             </div>
                             <div
                                 *ngIf="
-                                    registerForm.controls.username.errors
-                                        ?.minlength &&
+                                    registerForm.controls.username.errors?.minlength &&
                                     (registerForm.touched || registerForm.dirty)
                                 "
                                 class="form-error"
@@ -67,8 +60,7 @@
                             />
                             <div
                                 *ngIf="
-                                    registerForm.controls.password.errors
-                                        ?.minlength &&
+                                    registerForm.controls.password.errors?.minlength &&
                                     (registerForm.touched || registerForm.dirty)
                                 "
                                 class="form-error"
@@ -78,9 +70,7 @@
                         </div>
                         <!-- Confirm password -->
                         <div class="form-group">
-                            <label for="confirmPasswordInput"
-                                >Confirm password *</label
-                            >
+                            <label for="confirmPasswordInput">Confirm password *</label>
                             <input
                                 type="password"
                                 class="form-control"
@@ -91,8 +81,7 @@
                             />
                             <div
                                 *ngIf="
-                                    registerForm.controls.repeat.errors
-                                        ?.matchOther &&
+                                    registerForm.controls.repeat.errors?.matchOther &&
                                     (registerForm.touched || registerForm.dirty)
                                 "
                                 class="form-error"
@@ -104,11 +93,7 @@
                 </div>
                 <!-- card-body -->
                 <div class="card-footer border-dark">
-                    <button
-                        type="button"
-                        routerLink="/login"
-                        class="btn btn-primary"
-                    >
+                    <button type="button" routerLink="/login" class="btn btn-primary">
                         Login
                     </button>
                     <button

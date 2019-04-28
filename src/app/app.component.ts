@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngxs/store';
+import { InitCurrentUser } from './ngxs/app.action';
 
 @Component({
     selector: 'app-root',
@@ -10,5 +11,7 @@ import { Store } from '@ngxs/store';
 export class AppComponent implements OnInit {
     constructor(private store: Store) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.store.dispatch(new InitCurrentUser());
+    }
 }

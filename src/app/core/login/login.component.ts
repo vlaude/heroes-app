@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { SetCurrentUser } from '../../ngxs/app.action';
 import { Store } from '@ngxs/store';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
     selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
         private store: Store,
         private fb: FormBuilder,
         private authService: AuthService,
+        private localStorageService: LocalStorageService,
         private router: Router,
         private toastr: ToastrService
     ) {}
@@ -39,6 +41,7 @@ export class LoginComponent implements OnInit {
         this.authService.login(credentials).subscribe(
             response => {
                 this.loginFormSubmitted = false;
+                this.localStorageService.setToken(response.token);
                 this.store.dispatch(new SetCurrentUser(response.profile));
                 this.toastr.success(
                     `You are logged as ${response.profile.username}`
