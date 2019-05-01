@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Credentials } from '../../models/credentials.model';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { SetCurrentUser } from '../../ngxs/app.action';
 import { Store } from '@ngxs/store';
 import { LocalStorageService } from '../../services/local-storage.service';
 
@@ -30,9 +29,14 @@ export class LoginComponent implements OnInit {
         password: ['', [Validators.required]],
     });
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.authService.logout();
+    }
 
     onLoginFormSubmit() {
+        if (this.loginForm.invalid) {
+            return;
+        }
         this.loginFormSubmitted = true;
         const credentials: Credentials = {
             username: this.loginForm.value.username,
@@ -41,11 +45,9 @@ export class LoginComponent implements OnInit {
         this.authService.login(credentials).subscribe(
             response => {
                 this.loginFormSubmitted = false;
-                this.localStorageService.setToken(response.token);
-                this.store.dispatch(new SetCurrentUser(response.profile));
-                this.toastr.success(
-                    `You are logged as ${response.profile.username}`
-                );
+                this.toastr.success(`You are logged as ${response.username}`, null, {
+                    positionClass: 'toast-bottom-right',
+                });
                 this.router.navigate(['/']);
             },
             error => {

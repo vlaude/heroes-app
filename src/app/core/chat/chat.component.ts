@@ -1,12 +1,10 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Message } from '../../models/message.model';
 import { ChatService } from '../../services/chat.service';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
-import { AppState } from '../../ngxs/app.state';
-import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
-import { isNullOrUndefined } from 'util';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-chat',
@@ -14,14 +12,16 @@ import { isNullOrUndefined } from 'util';
     styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
-    @Select(AppState.getCurrentUser) user$: Observable<User>;
+    currentUser: User;
     newMessage: string;
     messages: Message[] = [];
 
     // Useful to autoscroll chat
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-    constructor(private store: Store, private chatService: ChatService) {}
+    constructor(private store: Store, private authService: AuthService, private chatService: ChatService) {
+        this.authService.currentUser$.subscribe(currentUser => (this.currentUser = currentUser));
+    }
 
     ngOnInit(): void {
         this.chatService
@@ -50,18 +50,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             return;
         }
         let poster;
-        this.user$.subscribe(user => {
-            if (isNullOrUndefined(user)) {
-                return;
-            }
-            poster = user.username;
-            this.chatService.sendMessage({
-                timeStamp: new Date(),
-                message: this.newMessage,
-                poster,
-            });
-            this.newMessage = '';
+
+        poster = this.currentUser.username;
+        this.chatService.sendMessage({
+            timeStamp: new Date(),
+            message: this.newMessage,
+            poster,
         });
+        this.newMessage = '';
     }
 
     scrollToBottom(): void {

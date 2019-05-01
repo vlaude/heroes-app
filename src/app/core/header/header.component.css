@@ -1,3 +1,8 @@
+.brand {
+    color: #eeeeee;
+    letter-spacing: 0.1em;
+}
+
 .dropdown-item {
     cursor: pointer;
 }
