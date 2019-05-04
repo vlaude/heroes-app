@@ -1,22 +1,33 @@
 <div class="chat border">
-    <div class="chat__messages pb-3" #scrollMe>
-        <div *ngFor="let messageObject of messages">
-            <strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>
-            -
-            <em class="pr-3 username"
-                ><strong>{{ messageObject.poster.username | uppercase }}</strong> says:</em
-            >
+    <div class="chat__messages" #scrollMe>
+        <div *ngFor="let messageObject of messages" class="chat__messages__el">
+            <!-- Posteur et date -->
+            <div *ngIf="shouldDisplayUsername(messageObject)">
+                <span
+                    class="chat__messages__el__poster"
+                    [ngClass]="{
+                        'chat__messages__el__poster--admin': ['admin', 'chow', 'vlaude'].includes(
+                            messageObject.poster.username.toLowerCase()
+                        )
+                    }"
+                    >{{ messageObject.poster.username }}</span
+                >
+                <span class="chat__messages__el__date ml-2"
+                    >{{ messageObject.timeStamp | date: 'HH' }} h {{ messageObject.timeStamp | date: 'mm' }}</span
+                >
+            </div>
+            <!-- Message -->
 
-            {{ messageObject.message }}
+            <div class="chat__messages__el__message">{{ messageObject.message }}</div>
         </div>
     </div>
     <!-- chat messages -->
-    <div class="input-group">
+    <div class="input-group pl-4 pr-4 pt-3">
         <input
             [(ngModel)]="newMessage"
             (keyup)="$event.keyCode == 13 && sendMessage()"
             type="text"
-            class="form-control"
+            class="form-control chat__input"
             placeholder="Say something"
         />
         <div class="input-group-append">
