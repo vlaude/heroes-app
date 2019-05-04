@@ -4,10 +4,7 @@
             <strong>( {{ messageObject.timeStamp | date: 'short' }} )</strong>
             -
             <em class="pr-3 username"
-                ><strong>{{
-                    messageObject.poster || 'visitor' | uppercase
-                }}</strong>
-                says:</em
+                ><strong>{{ messageObject.poster.username | uppercase }}</strong> says:</em
             >
 
             {{ messageObject.message }}
@@ -23,11 +20,7 @@
             placeholder="Say something"
         />
         <div class="input-group-append">
-            <button
-                class="btn btn-outline-secondary"
-                type="button"
-                (click)="sendMessage()"
-            >
+            <button class="btn btn-outline-secondary" type="button" (click)="sendMessage()">
                 Send
             </button>
         </div>

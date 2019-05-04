@@ -49,9 +49,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if (this.newMessage.trim().length === 0) {
             return;
         }
-        let poster;
-
-        poster = this.currentUser.username;
+        const poster = this.currentUser;
         this.chatService.sendMessage({
             timeStamp: new Date(),
             message: this.newMessage,
