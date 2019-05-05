@@ -42,7 +42,7 @@
                         <button type="button" routerLink="/register" class="btn btn-primary">
                             Register
                         </button>
-                        <button type="submit" class="btn btn-success ml-2">
+                        <button type="submit" class="btn btn-success ml-2" [disabled]="loginForm.invalid">
                             <span
                                 *ngIf="loginFormSubmitted"
                                 class="spinner-grow spinner-grow-sm"

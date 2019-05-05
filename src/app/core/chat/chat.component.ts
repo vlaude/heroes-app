@@ -26,8 +26,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     ngOnInit(): void {
         this.chatService
             .getMessagesHistory()
-            .pipe(flatMap(message => message))
-            .subscribe(messages => this.messages.push(messages));
+            .pipe(flatMap(message$ => message$))
+            .subscribe(message => this.messages.push(message));
 
         this.chatService
             .getMessages()
@@ -56,6 +56,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             poster,
         });
         this.newMessage = '';
+    }
+
+    /**
+     * Indique si on doit afficher le pseudonyme du posteur du message en fonction du message précédent
+     * ou du temps écoulé entre deux messages.
+     */
+    shouldDisplayUsername(message: Message): boolean {
+        const msgIndex = this.messages.indexOf(message);
+        if (msgIndex === 0) {
+            return true;
+        }
+        const t1 = new Date(this.messages[msgIndex].timeStamp).getTime();
+        const t2 = new Date(this.messages[msgIndex - 1].timeStamp).getTime();
+        const diff = Math.abs((t1 - t2) / 1000);
+        // Si + de 5 minutes de différence
+        if (diff > 60 * 5) {
+            return true;
+        }
+        return this.messages[msgIndex].poster.username !== this.messages[msgIndex - 1].poster.username;
     }
 
     scrollToBottom(): void {
