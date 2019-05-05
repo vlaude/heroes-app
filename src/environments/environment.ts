@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     VERSION: require('../../package.json').version,
-    HEROES_API_URL: 'http://localhost:3000',
+    HEROES_API_URL: 'https://vlaude-heroes-api.herokuapp.com',
 };
 
 /*
