@@ -36,6 +36,10 @@
                                 formControlName="password"
                             />
                         </div>
+
+                        <div *ngIf="invalidCredentialsError" class="invalid-credentials">
+                            invalid credentials, please try again
+                        </div>
                     </div>
                     <!-- card-body -->
                     <div class="card-footer border-dark">
