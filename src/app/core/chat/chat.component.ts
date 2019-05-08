@@ -24,6 +24,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit(): void {
+        // TODO Socket service to manage socket outside chat service
+        this.chatService.sendUserConnected(this.currentUser);
+
         this.chatService
             .getMessagesHistory()
             .pipe(flatMap(message$ => message$))
