@@ -5,6 +5,7 @@ import { Store } from '@ngxs/store';
 import { distinctUntilChanged, flatMap, throttleTime } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
     selector: 'app-chat',
@@ -19,20 +20,22 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     // Useful to autoscroll chat
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-    constructor(private store: Store, private authService: AuthService, private chatService: ChatService) {
+    constructor(
+        private store: Store,
+        private authService: AuthService,
+        private chatService: ChatService,
+        private socketService: SocketService
+    ) {
         this.authService.currentUser$.subscribe(currentUser => (this.currentUser = currentUser));
     }
 
     ngOnInit(): void {
-        // TODO Socket service to manage socket outside chat service
-        this.chatService.sendUserConnected(this.currentUser);
-
         this.chatService
             .getMessagesHistory()
             .pipe(flatMap(message$ => message$))
             .subscribe(message => this.messages.push(message));
 
-        this.chatService
+        this.socketService
             .getMessages()
             .pipe(
                 distinctUntilChanged(),
@@ -53,7 +56,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             return;
         }
         const poster = this.currentUser;
-        this.chatService.sendMessage({
+        this.socketService.sendMessage({
             timeStamp: new Date(),
             message: this.newMessage,
             poster,
