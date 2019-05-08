@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { LocalStorageService } from './local-storage.service';
 import { User } from '../models/user.model';
 import { isNullOrUndefined } from 'util';
+import { SocketService } from './socket.service';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +18,11 @@ export class AuthService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser$: Observable<User>;
 
-    constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
+    constructor(
+        private http: HttpClient,
+        private localStorageService: LocalStorageService,
+        private socketService: SocketService
+    ) {
         this.currentUserSubject = new BehaviorSubject<User>(this.localStorageService.getCurrentUser());
         this.currentUser$ = this.currentUserSubject.asObservable();
     }
@@ -35,6 +40,7 @@ export class AuthService {
                     user.token = response.token;
                     this.localStorageService.setCurrentUser(user);
                     this.currentUserSubject.next(user);
+                    this.socketService.sendUserConnected(user);
                 }
                 return user;
             })
@@ -42,6 +48,7 @@ export class AuthService {
     }
 
     logout() {
+        this.socketService.sendUserDisconnected(this.currentUserValue);
         this.localStorageService.logout();
         this.currentUserSubject.next(null);
     }
