@@ -18,6 +18,7 @@ import { LoginComponent } from './core/login/login.component';
 import { HomeComponent } from './core/home/home.component';
 import { ChatComponent } from './core/chat/chat.component';
 import { ToastrModule } from 'ngx-toastr';
+import { LogoComponent } from './core/logo/logo.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
         LoginComponent,
         HomeComponent,
         ChatComponent,
+        LogoComponent,
     ],
     imports: [
         BrowserModule,

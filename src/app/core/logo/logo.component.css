@@ -1,0 +1,21 @@
+.visor {
+  transition: .5s;
+  transition-delay: .2s;
+}
+
+#svg8:hover .visor{
+  fill: #FF0000 !important;
+}
+
+#svg8:hover .line{
+  animation: animate-line .4s linear;
+}
+
+@keyframes animate-line{
+  0%   {stroke: #000000}
+  25%  {stroke: url(#vertical-black-red)}
+  50%  {stroke: #FF0000}
+  75%  {stroke: url(#vertical-red-black)}
+  100% {stroke: #000000}
+}
+
