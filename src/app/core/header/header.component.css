@@ -1,3 +1,7 @@
+.navbar {
+    border-bottom: 0.1em solid #1a1e21;
+}
+
 .brand {
     color: #eeeeee;
     letter-spacing: 0.1em;

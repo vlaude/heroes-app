@@ -30,27 +30,12 @@ export class RegisterComponent implements OnInit {
             [
                 Validators.required,
                 Validators.minLength(4),
-                forbiddenNameValidator([
-                    'admin',
-                    'administrator',
-                    'administrateur',
-                    'god',
-                    'root',
-                    'chow',
-                    'vlaude',
-                ]),
+                forbiddenNameValidator(['admin', 'administrator', 'administrateur', 'god', 'root', 'chow', 'vlaude']),
             ],
         ],
         email: [''],
         password: ['', [Validators.required, Validators.minLength(6)]],
-        repeat: [
-            '',
-            [
-                Validators.required,
-                Validators.minLength(6),
-                matchOtherValidator('password'),
-            ],
-        ],
+        repeat: ['', [Validators.required, Validators.minLength(6), matchOtherValidator('password')]],
     });
 
     ngOnInit() {}

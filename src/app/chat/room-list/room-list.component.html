@@ -1,0 +1,12 @@
+<div class="room-list">
+    <div
+        *ngFor="let room of sortRoomsBy('name')"
+        class="room"
+        (click)="onRoomSelect(room)"
+        [ngClass]="{ 'room--selected': roomSelected === room, 'room--unread': getNewMessagesCountByRoom(room) > 0 }"
+    >
+        <img src="assets/rooms/icons/{{ room.iconPath }}" *ngIf="room.iconPath" width="25" height="25" class="mr-3" />
+        {{ room.name }}
+        <span class="badge badge-pill badge-danger ml-2">{{ getNewMessagesCountByRoom(room) }}</span>
+    </div>
+</div>

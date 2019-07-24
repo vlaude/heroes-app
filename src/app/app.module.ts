@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChatService } from './services/chat.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgxsModule } from '@ngxs/store';
 import { AppState } from './ngxs/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -16,8 +16,11 @@ import { MaterialModule } from './modules/material.module';
 import { RegisterComponent } from './core/register/register.component';
 import { LoginComponent } from './core/login/login.component';
 import { HomeComponent } from './core/home/home.component';
-import { ChatComponent } from './core/chat/chat.component';
+import { ChatBoxComponent } from './chat/chat-box/chat-box.component';
+import { ChatComponent } from './chat/chat/chat.component';
 import { ToastrModule } from 'ngx-toastr';
+import { RoomListComponent } from './chat/room-list/room-list.component';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 @NgModule({
     declarations: [
@@ -27,6 +30,8 @@ import { ToastrModule } from 'ngx-toastr';
         LoginComponent,
         HomeComponent,
         ChatComponent,
+        ChatBoxComponent,
+        RoomListComponent,
     ],
     imports: [
         BrowserModule,
@@ -42,7 +47,14 @@ import { ToastrModule } from 'ngx-toastr';
         MaterialModule,
         ToastrModule.forRoot(),
     ],
-    providers: [ChatService],
+    providers: [
+        ChatService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

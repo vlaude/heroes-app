@@ -1,7 +1,9 @@
 import { User } from './user.model';
+import { Room } from './room.model';
 
 export interface Message {
-    timeStamp?: Date;
-    message: string;
+    date?: Date;
+    content: string;
     poster: User;
+    room: Room;
 }

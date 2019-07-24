@@ -13,7 +13,7 @@ import { SocketService } from './socket.service';
     providedIn: 'root',
 })
 export class AuthService {
-    url = `${environment.HEROES_API_URL}/api/v1/auth`;
+    url = `${environment.HEROES_API_URL}/api/v1`;
 
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser$: Observable<User>;
@@ -51,6 +51,10 @@ export class AuthService {
         this.socketService.sendUserDisconnected(this.currentUserValue);
         this.localStorageService.logout();
         this.currentUserSubject.next(null);
+    }
+
+    getToken(): string {
+        return isNullOrUndefined(this.currentUserValue) ? '' : this.currentUserValue.token;
     }
 
     isAuthenticated(): boolean {
