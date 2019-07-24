@@ -1,36 +1,43 @@
 <div class="chat border">
     <div class="chat-header" *ngIf="room"># {{ room.name }}</div>
     <div class="chat__messages" #scrollMe>
-        <div *ngFor="let messageObject of messages" class="chat__messages__el">
-            <!-- Posteur et date -->
-            <div *ngIf="shouldDisplayUsername(messageObject)">
-                <span
-                    class="chat__messages__el__poster"
+        <div *ngFor="let messageObject of messages">
+            <!-- Jour -->
+            <div *ngIf="shouldDisplayDay(messageObject)" class="chat__date">
+                <div></div>
+                {{ messageObject.date | date }}
+                <div></div>
+            </div>
+            <div class="chat__messages__el">
+                <!-- Posteur et date -->
+                <div *ngIf="shouldDisplayUsername(messageObject)">
+                    <span
+                        class="chat__messages__el__poster"
+                        [ngClass]="{
+                            'chat__messages__el__poster--admin': ['admin', 'chow', 'vlaude'].includes(
+                                messageObject.poster.username.toLowerCase()
+                            ),
+                            'chat__messages__el__poster--server': ['bbot'].includes(
+                                messageObject.poster.username.toLowerCase()
+                            )
+                        }"
+                        >{{ messageObject.poster.username }}</span
+                    >
+                    <span class="chat__messages__el__date ml-2"
+                        >{{ messageObject.date | date: 'HH' }} h {{ messageObject.date | date: 'mm' }}</span
+                    >
+                </div>
+                <!-- Message -->
+                <div
+                    class="chat__messages__el__message"
                     [ngClass]="{
-                        'chat__messages__el__poster--admin': ['admin', 'chow', 'vlaude'].includes(
-                            messageObject.poster.username.toLowerCase()
-                        ),
-                        'chat__messages__el__poster--server': ['bbot'].includes(
+                        'chat__messages__el__message--server': ['bbot'].includes(
                             messageObject.poster.username.toLowerCase()
                         )
                     }"
-                    >{{ messageObject.poster.username }}</span
                 >
-                <span class="chat__messages__el__date ml-2"
-                    >{{ messageObject.date | date: 'HH' }} h {{ messageObject.date | date: 'mm' }}</span
-                >
-            </div>
-            <!-- Message -->
-
-            <div
-                class="chat__messages__el__message"
-                [ngClass]="{
-                    'chat__messages__el__message--server': ['bbot'].includes(
-                        messageObject.poster.username.toLowerCase()
-                    )
-                }"
-            >
-                {{ messageObject.content }}
+                    {{ messageObject.content }}
+                </div>
             </div>
         </div>
     </div>
@@ -44,7 +51,7 @@
             placeholder="Say something"
         />
         <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="sendMessage()">
+            <button class="btn btn-outline-secondary" type="button" (click)="sendMessage()" style="font-size: 14px">
                 Send
             </button>
         </div>

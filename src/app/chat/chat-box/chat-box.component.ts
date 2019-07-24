@@ -62,6 +62,16 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         return this.messages[msgIndex].poster.username !== this.messages[msgIndex - 1].poster.username;
     }
 
+    shouldDisplayDay(message: Message): boolean {
+        const msgIndex = this.messages.indexOf(message);
+        if (msgIndex === 0) {
+            return true;
+        }
+        const start = new Date(this.messages[msgIndex - 1].date);
+        const end = new Date(this.messages[msgIndex].date);
+        return start.getDay() !== end.getDay();
+    }
+
     scrollToBottom(): void {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     }

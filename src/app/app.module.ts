@@ -21,6 +21,7 @@ import { ChatComponent } from './chat/chat/chat.component';
 import { ToastrModule } from 'ngx-toastr';
 import { RoomListComponent } from './chat/room-list/room-list.component';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { ConnListComponent } from './chat/conn-list/conn-list.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
         ChatComponent,
         ChatBoxComponent,
         RoomListComponent,
+        ConnListComponent,
     ],
     imports: [
         BrowserModule,

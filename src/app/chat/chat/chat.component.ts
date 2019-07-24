@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit {
     messages: Message[] = [];
     // key = Room id
     cache: Map<number, Message[]> = new Map<number, Message[]>();
+    socketClients: any[];
     // key = Room id, value = count of new messages
     newMessagesOnOthersRooms: Map<number, number> = new Map<number, number>();
 
@@ -32,6 +33,8 @@ export class ChatComponent implements OnInit {
     ngOnInit() {
         this.authService.currentUser$.subscribe(currentUser => {
             this.currentUser = currentUser;
+            this.socketService.connect(this.currentUser.username);
+            this.socketService.getClientsConnected().subscribe(clients => (this.socketClients = clients));
         });
 
         this.chatService.getAllRooms().subscribe(rooms => {

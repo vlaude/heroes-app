@@ -10,5 +10,7 @@
     <div class="col-8 pl-0">
         <app-chat-box [room]="currentRoom" [messages]="messages" (newMessage)="handleNewMessage($event)"></app-chat-box>
     </div>
-    <div class="col-2"></div>
+    <div class="col-2">
+        <app-conn-list [socketClients]="socketClients"></app-conn-list>
+    </div>
 </div>

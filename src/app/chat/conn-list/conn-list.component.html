@@ -1,0 +1,4 @@
+<div *ngFor="let client of socketClients | keyvalue" class="clients">
+    <div class="client__badge mr-2"></div>
+    <div class="client__username">{{ client.key }}</div>
+</div>

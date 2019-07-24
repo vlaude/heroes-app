@@ -40,7 +40,6 @@ export class AuthService {
                     user.token = response.token;
                     this.localStorageService.setCurrentUser(user);
                     this.currentUserSubject.next(user);
-                    this.socketService.sendUserConnected(user);
                 }
                 return user;
             })
@@ -48,7 +47,7 @@ export class AuthService {
     }
 
     logout() {
-        this.socketService.sendUserDisconnected(this.currentUserValue);
+        this.socketService.disconnect();
         this.localStorageService.logout();
         this.currentUserSubject.next(null);
     }
