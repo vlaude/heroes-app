@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RegisterUser } from '../models/register-user.model';
+import { RegisterUser } from '../shared/models/register-user.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 

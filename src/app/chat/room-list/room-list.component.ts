@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Room } from '../../models/room.model';
+import { Room } from '../../shared/models/room.model';
 
 @Component({
     selector: 'app-room-list',

@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { forbiddenNameValidator } from '../../shared/forbidden-name-validator.directive';
 import { matchOtherValidator } from '../../shared/match-other-validator.directive';
-import { RegisterUser } from '../../models/register-user.model';
+import { RegisterUser } from '../../shared/models/register-user.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@ngxs/store';

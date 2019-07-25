@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { Resolve } from '@angular/router';
-import { ChatService } from '../../services/chat.service';
+import { ChatService } from '../../chat/services/chat.service';
 import { Injectable } from '@angular/core';
-import { Room } from '../../models/room.model';
+import { Room } from '../models/room.model';
 
 @Injectable()
 export class RoomListResolver implements Resolve<Observable<Room[]>> {

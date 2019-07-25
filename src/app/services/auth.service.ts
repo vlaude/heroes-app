@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Credentials } from '../models/credentials.model';
+import { Credentials } from '../shared/models/credentials.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService } from './local-storage.service';
-import { User } from '../models/user.model';
+import { User } from '../shared/models/user.model';
 import { isNullOrUndefined } from 'util';
 import { SocketService } from './socket.service';
 

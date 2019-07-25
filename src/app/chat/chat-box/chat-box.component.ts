@@ -10,8 +10,8 @@ import {
     SimpleChanges,
     ViewChild,
 } from '@angular/core';
-import { Message } from '../../models/message.model';
-import { Room } from '../../models/room.model';
+import { Message } from '../../shared/models/message.model';
+import { Room } from '../../shared/models/room.model';
 
 @Component({
     selector: 'app-chat-box',

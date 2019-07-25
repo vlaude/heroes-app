@@ -3,13 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChatService } from './services/chat.service';
+import { ChatService } from './chat/services/chat.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgxsModule } from '@ngxs/store';
-import { AppState } from './ngxs/app.state';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { environment } from '../environments/environment';
 import { HeaderComponent } from './core/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material.module';
@@ -44,10 +40,6 @@ import { LogoComponent } from './core/logo/logo.component';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        NgxsModule.forRoot([AppState], {
-            developmentMode: !environment.production,
-        }),
-        NgxsLoggerPluginModule.forRoot(),
         MaterialModule,
         ToastrModule.forRoot(),
     ],

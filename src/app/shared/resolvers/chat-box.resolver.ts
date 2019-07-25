@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Resolve } from '@angular/router';
-import { Message } from '../../models/message.model';
-import { ChatService } from '../../services/chat.service';
+import { Message } from '../models/message.model';
+import { ChatService } from '../../chat/services/chat.service';
 import { Injectable } from '@angular/core';
 
 @Injectable()

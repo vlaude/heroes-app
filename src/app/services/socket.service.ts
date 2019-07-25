@@ -3,8 +3,8 @@ import { environment } from '../../environments/environment';
 
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
-import { Room } from '../models/room.model';
-import { Message } from '../models/message.model';
+import { Room } from '../shared/models/room.model';
+import { Message } from '../shared/models/message.model';
 
 @Injectable({
     providedIn: 'root',

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Room } from '../../models/room.model';
+import { Room } from '../../shared/models/room.model';
 import { SocketService } from '../../services/socket.service';
 import { isNullOrUndefined } from 'util';
 import { distinctUntilChanged, throttleTime } from 'rxjs/operators';
-import { Message } from '../../models/message.model';
+import { Message } from '../../shared/models/message.model';
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user.model';
+import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
