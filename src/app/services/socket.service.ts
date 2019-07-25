@@ -35,6 +35,14 @@ export class SocketService {
         this.socket.emit('new-message', message);
     }
 
+    public sendIsTyping(username: string, room: Room) {
+        this.socket.emit('is-typing', { username, room });
+    }
+
+    public sendHasStopTyping(username: string, room: Room) {
+        this.socket.emit('stop-typing', { username, room });
+    }
+
     public getMessages = () => {
         return Observable.create(observer => {
             this.socket.on('new-message', message => {
@@ -47,6 +55,14 @@ export class SocketService {
         return Observable.create(observer => {
             this.socket.on('clients', socketClients => {
                 observer.next(socketClients);
+            });
+        });
+    };
+
+    public getIsTyping = () => {
+        return Observable.create(observer => {
+            this.socket.on('is-typing', username => {
+                observer.next(username);
             });
         });
     };

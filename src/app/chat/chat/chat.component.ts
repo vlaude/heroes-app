@@ -7,6 +7,7 @@ import { Message } from '../../shared/models/message.model';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-chat',
@@ -24,7 +25,12 @@ export class ChatComponent implements OnInit {
     // key = Room id, value = count of new messages
     newMessagesOnOthersRooms: Map<number, number> = new Map<number, number>();
 
-    constructor(private route: ActivatedRoute, private authService: AuthService, public socketService: SocketService) {}
+    constructor(
+        private route: ActivatedRoute,
+        private authService: AuthService,
+        public socketService: SocketService,
+        public titleService: Title
+    ) {}
 
     ngOnInit() {
         this.authService.currentUser$.subscribe(currentUser => {
@@ -57,6 +63,7 @@ export class ChatComponent implements OnInit {
                     this.handleNewMessagesOnOthersRooms(message.room.id);
                 }
                 this.addMessageToCache(message);
+                // this.titleService.setTitle('(¤) ' + this.titleService.getTitle());
             });
     }
 

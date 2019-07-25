@@ -1,17 +1,7 @@
-import {
-    AfterViewChecked,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-} from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Message } from '../../shared/models/message.model';
 import { Room } from '../../shared/models/room.model';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
     selector: 'app-chat-box',
@@ -20,6 +10,9 @@ import { Room } from '../../shared/models/room.model';
 })
 export class ChatBoxComponent implements OnInit, AfterViewChecked {
     currentMessage: string;
+    typer = 'henri';
+    typing = false;
+    timeout;
     @Input() room: Room;
     @Input() messages: Message[] = [];
     @Output() newMessage: EventEmitter<string> = new EventEmitter<string>();
@@ -27,9 +20,11 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
     // Useful to autoscroll chat
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-    constructor() {}
+    constructor(private socketService: SocketService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.socketService.getIsTyping().subscribe(console.log);
+    }
 
     ngAfterViewChecked(): void {
         this.scrollToBottom();
@@ -74,5 +69,22 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
 
     scrollToBottom(): void {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    }
+
+    handleKeyDown(): void {
+        if (!this.typing) {
+            this.typing = true;
+            this.socketService.sendIsTyping('machin', this.room);
+            this.timeout = setTimeout(() => {
+                this.typing = false;
+                this.socketService.sendHasStopTyping('machin', this.room);
+            }, 3000);
+        } else {
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                this.typing = false;
+                this.socketService.sendHasStopTyping('machin', this.room);
+            }, 3000);
+        }
     }
 }
