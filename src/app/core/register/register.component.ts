@@ -6,7 +6,6 @@ import { matchOtherValidator } from '../../shared/match-other-validator.directiv
 import { RegisterUser } from '../../shared/models/register-user.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Store } from '@ngxs/store';
 
 @Component({
     selector: 'app-register',
@@ -15,7 +14,6 @@ import { Store } from '@ngxs/store';
 })
 export class RegisterComponent implements OnInit {
     constructor(
-        private store: Store,
         private fb: FormBuilder,
         private userService: UserService,
         private router: Router,
