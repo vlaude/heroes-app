@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Credentials } from '../../shared/models/credentials.model';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Store } from '@ngxs/store';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
@@ -14,7 +13,6 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class LoginComponent implements OnInit {
     constructor(
-        private store: Store,
         private fb: FormBuilder,
         private authService: AuthService,
         private localStorageService: LocalStorageService,
