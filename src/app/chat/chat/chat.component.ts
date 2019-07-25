@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from '../../services/chat.service';
 import { Room } from '../../models/room.model';
 import { SocketService } from '../../services/socket.service';
 import { isNullOrUndefined } from 'util';
-import { distinctUntilChanged, flatMap, map, throttleTime } from 'rxjs/operators';
+import { distinctUntilChanged, throttleTime } from 'rxjs/operators';
 import { Message } from '../../models/message.model';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-chat',
@@ -24,11 +24,7 @@ export class ChatComponent implements OnInit {
     // key = Room id, value = count of new messages
     newMessagesOnOthersRooms: Map<number, number> = new Map<number, number>();
 
-    constructor(
-        private authService: AuthService,
-        private chatService: ChatService,
-        public socketService: SocketService
-    ) {}
+    constructor(private route: ActivatedRoute, private authService: AuthService, public socketService: SocketService) {}
 
     ngOnInit() {
         this.authService.currentUser$.subscribe(currentUser => {
@@ -37,39 +33,31 @@ export class ChatComponent implements OnInit {
             this.socketService.getClientsConnected().subscribe(clients => (this.socketClients = clients));
         });
 
-        this.chatService.getAllRooms().subscribe(rooms => {
-            this.rooms = rooms;
-            this.currentRoom = rooms.find(r => r.name.toLowerCase() === 'general');
-            this.rooms.forEach(room => this.socketService.joinRoom(room));
+        // Init rooms
+        this.rooms = this.route.snapshot.data['rooms'];
+        this.currentRoom = this.rooms.find(r => r.name.toLowerCase() === 'general');
+        this.rooms.forEach(room => this.socketService.joinRoom(room));
 
-            this.chatService
-                .getMessagesHistory()
-                .pipe(
-                    map(messages => this.sortBy(messages, 'date')),
-                    flatMap(message$ => message$)
-                )
-                .subscribe(message => {
-                    if (message.room.id === this.currentRoom.id) {
-                        this.messages.push(message);
-                    }
-                    this.addMessageToCache(message);
-                });
+        // Init messages
+        const allMessages = this.route.snapshot.data['messages'];
+        const sortedMessages = this.sortBy(allMessages, 'date');
+        sortedMessages.forEach(m => this.addMessageToCache(m));
+        this.messages = this.filterByRoom(sortedMessages, this.currentRoom);
 
-            this.socketService
-                .getMessages()
-                .pipe(
-                    distinctUntilChanged(),
-                    throttleTime(500)
-                )
-                .subscribe((message: Message) => {
-                    if (message.room.id === this.currentRoom.id) {
-                        this.messages.push(message);
-                    } else {
-                        this.handleNewMessagesOnOthersRooms(message.room.id);
-                    }
-                    this.addMessageToCache(message);
-                });
-        });
+        this.socketService
+            .getMessages()
+            .pipe(
+                distinctUntilChanged(),
+                throttleTime(500)
+            )
+            .subscribe((message: Message) => {
+                if (message.room.id === this.currentRoom.id) {
+                    this.messages.push(message);
+                } else {
+                    this.handleNewMessagesOnOthersRooms(message.room.id);
+                }
+                this.addMessageToCache(message);
+            });
     }
 
     addMessageToCache(message: Message) {
@@ -114,5 +102,9 @@ export class ChatComponent implements OnInit {
 
     sortBy(array: any[], prop: string): any[] {
         return array.sort((a, b) => (a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1));
+    }
+
+    filterByRoom(message: Message[], room: Room) {
+        return message.filter(m => m.room.id === room.id);
     }
 }
