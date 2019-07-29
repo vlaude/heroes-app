@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Room } from '../models/room.model';
 
 @Injectable()
-export class RoomListResolver implements Resolve<Observable<Room[]>> {
+export class RoomsResolver implements Resolve<Observable<Room[]>> {
     constructor(private chatService: ChatService) {}
 
     resolve(): Observable<Room[]> {

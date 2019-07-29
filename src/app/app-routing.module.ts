@@ -5,9 +5,8 @@ import { LoginComponent } from './core/login/login.component';
 import { HomeComponent } from './core/home/home.component';
 import { IsSignedInGuard } from './shared/guards/is-signed-in.guard';
 import { IsNotSignedInGuard } from './shared/guards/is-not-signed-in.guard';
-import { ChatBoxResolver } from './shared/resolvers/chat-box.resolver';
 import { ChatComponent } from './chat/chat/chat.component';
-import { RoomListResolver } from './shared/resolvers/room-list.resolver';
+import { RoomsResolver } from './shared/resolvers/rooms.resolver';
 
 const routes: Routes = [
     {
@@ -23,7 +22,7 @@ const routes: Routes = [
             {
                 path: '',
                 component: ChatComponent,
-                resolve: { messages: ChatBoxResolver, rooms: RoomListResolver },
+                resolve: { rooms: RoomsResolver },
             },
         ],
     },
@@ -42,6 +41,6 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
-    providers: [ChatBoxResolver, RoomListResolver],
+    providers: [RoomsResolver],
 })
 export class AppRoutingModule {}
