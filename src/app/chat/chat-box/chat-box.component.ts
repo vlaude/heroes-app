@@ -14,7 +14,6 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
     typing = false;
     timeout;
     @Input() room: Room;
-    @Input() messages: Message[] = [];
     @Output() newMessage: EventEmitter<string> = new EventEmitter<string>();
 
     // Useful to autoscroll chat
@@ -43,27 +42,27 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
      * ou du temps écoulé entre deux messages.
      */
     shouldDisplayUsername(message: Message): boolean {
-        const msgIndex = this.messages.indexOf(message);
+        const msgIndex = this.room.messages.indexOf(message);
         if (msgIndex === 0) {
             return true;
         }
-        const t1 = new Date(this.messages[msgIndex].date).getTime();
-        const t2 = new Date(this.messages[msgIndex - 1].date).getTime();
+        const t1 = new Date(this.room.messages[msgIndex].date).getTime();
+        const t2 = new Date(this.room.messages[msgIndex - 1].date).getTime();
         const diff = Math.abs((t1 - t2) / 1000);
         // Si + de 5 minutes de différence
         if (diff > 60 * 5) {
             return true;
         }
-        return this.messages[msgIndex].poster.username !== this.messages[msgIndex - 1].poster.username;
+        return this.room.messages[msgIndex].poster.username !== this.room.messages[msgIndex - 1].poster.username;
     }
 
     shouldDisplayDay(message: Message): boolean {
-        const msgIndex = this.messages.indexOf(message);
+        const msgIndex = this.room.messages.indexOf(message);
         if (msgIndex === 0) {
             return true;
         }
-        const start = new Date(this.messages[msgIndex - 1].date);
-        const end = new Date(this.messages[msgIndex].date);
+        const start = new Date(this.room.messages[msgIndex - 1].date);
+        const end = new Date(this.room.messages[msgIndex].date);
         return start.getDay() !== end.getDay();
     }
 
