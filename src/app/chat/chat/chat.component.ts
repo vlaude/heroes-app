@@ -1,39 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Room } from '../../shared/models/room.model';
 import { SocketService } from '../../services/socket.service';
-import { distinctUntilChanged, throttleTime } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil, throttleTime } from 'rxjs/operators';
 import { Message } from '../../shared/models/message.model';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { UserService } from '../../services/user.service';
+import { isNullOrUndefined } from 'util';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-chat',
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
     currentUser: User;
     rooms: Room[] = [];
     currentRoom: Room;
     messages: Message[] = [];
     socketClients: any[];
 
+    private unsubscribe: Subject<void> = new Subject();
+
     constructor(
         private route: ActivatedRoute,
         private authService: AuthService,
+        private userService: UserService,
         public socketService: SocketService,
         public titleService: Title
     ) {}
 
     ngOnInit() {
-        this.authService.currentUser$.subscribe(currentUser => {
-            this.currentUser = currentUser;
-            this.socketService.connect(this.currentUser.username);
-            this.socketService.getClientsConnected().subscribe(clients => (this.socketClients = clients));
-        });
-
+        // Get current user, his conversations, and other connected users.
+        this.currentUser = this.authService.currentUserValue;
+        this.userService
+            .getUserConversations(this.currentUser.id)
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(conversations => {
+                this.currentUser.conversations = conversations;
+            });
+        this.socketService.connect(this.currentUser.username);
+        this.socketService.getClientsConnected().subscribe(clients => (this.socketClients = clients));
+        // Init the rooms.
         this.rooms = this.route.snapshot.data.rooms;
         this.currentRoom = this.rooms.find(r => r.name.toLowerCase() === 'general');
         this.rooms.forEach(room => {
@@ -49,7 +60,7 @@ export class ChatComponent implements OnInit {
             )
             .subscribe((message: Message) => {
                 this.addMessageToRoom(message);
-                // this.titleService.setTitle('(¤) ' + this.titleService.getTitle());
+                this.markConvAsNoread(message.room);
             });
     }
 
@@ -63,6 +74,7 @@ export class ChatComponent implements OnInit {
 
     handleRoomSelected = room => {
         this.currentRoom = room;
+        this.markConvAsRead(room);
     };
 
     handleNewMessage = newMessage => {
@@ -81,7 +93,33 @@ export class ChatComponent implements OnInit {
         this.addMessageToRoom(message);
     };
 
+    handleInputFocus() {
+        this.markConvAsRead(this.currentRoom);
+    }
+
+    markConvAsNoread = (room: Room) => {
+        this.currentUser.conversations.find(conv => conv.roomId === room.id).isRead = false;
+        this.titleService.setTitle('(¤) ' + this.titleService.getTitle());
+    };
+
+    markConvAsRead = (room: Room) => {
+        const c = this.currentUser.conversations.find(conv => conv.roomId === room.id);
+        if (!c.isRead) {
+            c.isRead = true;
+            this.socketService.sendRoomRead(this.currentUser, this.currentRoom);
+        }
+
+        if (isNullOrUndefined(this.currentUser.conversations.find(conv => conv.isRead === false))) {
+            this.titleService.setTitle('Heroes');
+        }
+    };
+
     sortBy(array: any[], prop: string): any[] {
         return array.sort((a, b) => (a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1));
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 }

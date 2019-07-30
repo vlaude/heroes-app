@@ -3,11 +3,16 @@
         <app-room-list
             [rooms]="rooms"
             [roomSelected]="currentRoom"
+            [conversations]="currentUser.conversations"
             (newRoomSelected)="handleRoomSelected($event)"
         ></app-room-list>
     </div>
     <div class="col-8 pl-0">
-        <app-chat-box [room]="currentRoom" (newMessage)="handleNewMessage($event)"></app-chat-box>
+        <app-chat-box
+            [room]="currentRoom"
+            (newMessage)="handleNewMessage($event)"
+            (inputFocus)="handleInputFocus()"
+        ></app-chat-box>
     </div>
     <div class="col-2">
         <app-conn-list [socketClients]="socketClients"></app-conn-list>

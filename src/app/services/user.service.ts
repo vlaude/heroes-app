@@ -15,4 +15,8 @@ export class UserService {
     registerUser(user: RegisterUser): Observable<any> {
         return this.http.post(this.url, user);
     }
+
+    public getUserConversations = (userId: number): Observable<any[]> => {
+        return this.http.get<any[]>(`${this.url}/${userId}/conversations`);
+    };
 }

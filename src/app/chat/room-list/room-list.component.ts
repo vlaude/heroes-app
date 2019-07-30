@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Room } from '../../shared/models/room.model';
+import { Conversation } from '../../shared/models/conversation.model';
 
 @Component({
     selector: 'app-room-list',
@@ -9,8 +10,7 @@ import { Room } from '../../shared/models/room.model';
 export class RoomListComponent implements OnInit, OnChanges {
     @Input() rooms: Room[];
     @Input() roomSelected: Room;
-    // key = Room id, value = count of new messages
-    @Input() newMessages: Map<number, number> = new Map<number, number>();
+    @Input() conversations: Conversation[];
     @Output() newRoomSelected = new EventEmitter<Room>();
 
     constructor() {}
@@ -27,7 +27,7 @@ export class RoomListComponent implements OnInit, OnChanges {
         return this.rooms.sort((a, b) => (a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1));
     }
 
-    getNewMessagesCountByRoom(room: Room): number {
-        return this.newMessages.get(room.id);
-    }
+    isRoomReaded = (room: Room) => {
+        return this.conversations.find(conv => conv.roomId === room.id).isRead;
+    };
 }

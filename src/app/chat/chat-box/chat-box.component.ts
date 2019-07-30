@@ -15,6 +15,7 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
     timeout;
     @Input() room: Room;
     @Output() newMessage: EventEmitter<string> = new EventEmitter<string>();
+    @Output() inputFocus: EventEmitter<any> = new EventEmitter<any>();
 
     // Useful to autoscroll chat
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
@@ -85,5 +86,9 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
                 this.socketService.sendHasStopTyping('machin', this.room);
             }, 3000);
         }
+    }
+
+    emitInputFocus() {
+        this.inputFocus.emit();
     }
 }

@@ -5,6 +5,7 @@ import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { Room } from '../shared/models/room.model';
 import { Message } from '../shared/models/message.model';
+import { User } from '../shared/models/user.model';
 
 @Injectable({
     providedIn: 'root',
@@ -31,8 +32,16 @@ export class SocketService {
         this.socket.disconnect();
     }
 
+    public isConnected() {
+        return this.socket && this.socket.connected;
+    }
+
     public sendMessage(message: Message) {
         this.socket.emit('new-message', message);
+    }
+
+    public sendRoomRead(user: User, room: Room) {
+        this.socket.emit('room-read', { userId: user.id, roomId: room.id });
     }
 
     public sendIsTyping(username: string, room: Room) {

@@ -39,13 +39,14 @@
             </div>
         </div>
     </div>
-    <div *ngIf="typer" class="typer pl-4 pr-4 pt-1">{{ typer }} is typing...</div>
+    <!--    <div *ngIf="typer" class="typer pl-4 pr-4 pt-1">{{ typer }} is typing...</div>-->
     <!-- chat messages -->
     <div class="input-group pl-4 pr-4 pt-1">
         <input
             [(ngModel)]="currentMessage"
             (keyup)="$event.keyCode == 13 && sendMessage()"
             (keydown)="handleKeyDown()"
+            (focus)="emitInputFocus()"
             type="text"
             class="form-control chat__input"
             placeholder="Say something"

@@ -47,7 +47,9 @@ export class AuthService {
     }
 
     logout() {
-        this.socketService.disconnect();
+        if (this.socketService.isConnected()) {
+            this.socketService.disconnect();
+        }
         this.localStorageService.logout();
         this.currentUserSubject.next(null);
     }
