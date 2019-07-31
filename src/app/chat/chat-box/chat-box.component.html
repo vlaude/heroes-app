@@ -1,5 +1,5 @@
-<div class="chat border" *ngIf="room">
-    <div class="chat-header"># {{ room.name }}</div>
+<div class="chat" *ngIf="room">
+    <div class="chat-header shadow-sm"># {{ room.name }}</div>
     <div class="chat__messages" #scrollMe>
         <div *ngFor="let message of room.messages">
             <!-- Jour -->
@@ -41,7 +41,7 @@
     </div>
     <!--    <div *ngIf="typer" class="typer pl-4 pr-4 pt-1">{{ typer }} is typing...</div>-->
     <!-- chat messages -->
-    <div class="input-group pl-4 pr-4 pt-1">
+    <div class="input-group p-3">
         <input
             [(ngModel)]="currentMessage"
             (keyup)="$event.keyCode == 13 && sendMessage()"
@@ -51,11 +51,6 @@
             class="form-control chat__input"
             placeholder="Say something"
         />
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="sendMessage()" style="font-size: 14px">
-                Send
-            </button>
-        </div>
     </div>
     <!-- chat input -->
 </div>
