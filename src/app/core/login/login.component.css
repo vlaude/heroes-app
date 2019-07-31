@@ -1,4 +1,61 @@
- .invalid-credentials {
-     font-weight: 500;
-     color: #d32f2f;
- }
+.invalid-credentials {
+    text-align: center;
+    color: #f44336;
+    font-size: 15px;
+    padding: 5px;
+}
+
+.card {
+    background: #263238;
+}
+
+.card-body {
+    padding: 3rem;
+}
+
+.card-title {
+    color: #e0e0e0;
+    font-size: 24px;
+}
+
+label {
+    color: #bdbdbd;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-control {
+    height: 40px;
+    background: #1f292e;
+    border: thin solid #1b1b1b;
+    color: #e0e0e0;
+}
+
+.submit-btn {
+    cursor: pointer;
+    width: 100%;
+    height: 45px;
+    background: #2196f3;
+    border: none;
+    border-radius: 5px;
+    color: #fafafa;
+    font-size: 14px;
+}
+
+.submit-btn:hover {
+    background: #1976d2;
+}
+
+.submit-btn:disabled {
+    cursor: not-allowed;
+    background: #42a5f5;
+}
+
+.submit-btn:focus {
+    outline: none;
+}
+
+.no-account-text {
+    color: #757575;
+    font-size: 12px;
+}

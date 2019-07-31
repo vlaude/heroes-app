@@ -1,63 +1,54 @@
 <div class="container">
     <div class="row">
         <div class="col"></div>
-        <div class="col-lg-6 col-sm-10">
-            <div class="card border-dark" style="margin-top: 5rem">
-                <div class="card-header text-white bg-dark border-dark">
-                    <h5>Login</h5>
-                </div>
-                <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
-                    <div class="card-body">
+        <div class="col-lg-5 col-sm-10">
+            <div class="card shadow" style="margin-top: 7rem">
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
+                        <div class="card-title text-center mb-5">
+                            Welcome on Heroes
+                        </div>
                         <!-- Username -->
                         <div class="form-group">
-                            <label for="usernameInput">Username</label>
+                            <label for="usernameInput">USERNAME</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">@</div>
-                                </div>
-                                <input
-                                    class="form-control"
-                                    id="usernameInput"
-                                    placeholder="Username"
-                                    required
-                                    formControlName="username"
-                                />
+                                <input class="form-control" id="usernameInput" required formControlName="username" />
                             </div>
                         </div>
                         <!-- Password -->
                         <div class="form-group">
-                            <label for="passwordInput">Password</label>
+                            <label for="passwordInput">PASSWORD</label>
                             <input
                                 type="password"
                                 class="form-control"
                                 id="passwordInput"
-                                placeholder="Password"
                                 required
                                 formControlName="password"
                             />
                         </div>
 
                         <div *ngIf="invalidCredentialsError" class="invalid-credentials">
-                            invalid credentials, please try again
+                            Invalid credentials, please try again
                         </div>
-                    </div>
-                    <!-- card-body -->
-                    <div class="card-footer border-dark">
-                        <button type="button" routerLink="/register" class="btn btn-primary">
-                            Register
-                        </button>
-                        <button type="submit" class="btn btn-success ml-2" [disabled]="loginForm.invalid">
+                        <div *ngIf="serverError" class="invalid-credentials">
+                            Server error, we are sorry
+                        </div>
+
+                        <button class="submit-btn mt-3" [disabled]="loginForm.invalid">
                             <span
                                 *ngIf="loginFormSubmitted"
-                                class="spinner-grow spinner-grow-sm"
+                                class="spinner-grow spinner-grow-sm mr-2"
                                 role="status"
                                 aria-hidden="true"
-                            ></span>
-                            Login
+                            ></span
+                            >Login
                         </button>
-                    </div>
-                    <!-- card-footer -->
-                </form>
+
+                        <div class="no-account-text mt-2">
+                            Don't have an account ? <a routerLink="/register">Register</a>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- card -->
         </div>

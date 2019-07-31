@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
     ) {}
 
     loginFormSubmitted = false;
+
     invalidCredentialsError = false;
+    serverError = false;
 
     loginForm = this.fb.group({
         username: ['', [Validators.required]],
@@ -54,7 +56,8 @@ export class LoginComponent implements OnInit {
                 this.loginFormSubmitted = false;
                 // Si 401, crédentials incorrects
                 this.invalidCredentialsError = error.status === 401;
-                this.toastr.error(error.message);
+                this.serverError = error.status === 500;
+                // this.toastr.error(error.message);
             }
         );
     }

@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
     ) {}
 
     registerFormSubmitted = false;
+    usernameAlreadyTaken = false;
 
     registerForm = this.fb.group({
         username: [
@@ -32,8 +33,8 @@ export class RegisterComponent implements OnInit {
             ],
         ],
         email: [''],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        repeat: ['', [Validators.required, Validators.minLength(6), matchOtherValidator('password')]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        repeat: ['', [Validators.required, Validators.minLength(8), matchOtherValidator('password')]],
     });
 
     ngOnInit() {}
@@ -53,7 +54,8 @@ export class RegisterComponent implements OnInit {
             },
             error => {
                 this.registerFormSubmitted = false;
-                this.toastr.error(error.message);
+                this.usernameAlreadyTaken = error.status === 409;
+                // this.toastr.error(error.message);
             }
         );
     }

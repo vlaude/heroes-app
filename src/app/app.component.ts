@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +10,7 @@ import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStar
 export class AppComponent implements OnInit {
     loading = true;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authService: AuthService) {
         router.events.subscribe((routerEvents: Event) => {
             this.checkRouterEvent(routerEvents);
         });

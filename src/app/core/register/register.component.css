@@ -1,13 +1,81 @@
-.ng-valid[required], .ng-valid.required  {
-    border-left: 5px solid rgba(32, 77, 32, 0.623);
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #7cb342;
 }
 
-.ng-invalid:not(form)  {
-    border-left: 5px solid rgb(148, 27, 27);
+.ng-invalid:not(form) {
+    border-left: 5px solid #f44336;
 }
 
 .form-error {
-    color: rgb(148, 27, 27);
+    color: #f44336;
+    font-size: 12px;
+    padding-top: 2px;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+.card {
+    background: #263238;
+}
+
+.card-body {
+    padding: 2.5rem;
+}
+
+.card-title {
+    color: #e0e0e0;
+    font-size: 24px;
+}
+
+label {
+    color: #bdbdbd;
     font-size: 13px;
     font-weight: bold;
+}
+
+.form-control {
+    height: 40px;
+    background: #1f292e;
+    border: thin solid #1b1b1b;
+    color: #e0e0e0;
+}
+
+.submit-btn {
+    cursor: pointer;
+    width: 100%;
+    height: 45px;
+    background: #4caf50;
+    border: none;
+    border-radius: 5px;
+    color: #fafafa;
+    font-size: 14px;
+}
+
+.submit-btn:hover {
+    background: #388e3c;
+}
+
+.submit-btn:disabled {
+    cursor: not-allowed;
+    background: #66bb6a;
+}
+
+.submit-btn:focus {
+    outline: none;
+}
+
+.have-account-text {
+    color: #757575;
+    font-size: 12px;
+}
+
+.username-taken {
+    text-align: center;
+    color: #f44336;
+    font-size: 15px;
+    padding: 5px;
+    margin-bottom: -10px;
 }

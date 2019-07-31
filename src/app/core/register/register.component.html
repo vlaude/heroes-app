@@ -1,27 +1,18 @@
 <div class="container">
     <div class="row">
         <div class="col"></div>
-        <div class="col-lg-6 col-sm-10">
-            <div class="card border-dark" style="margin-top: 5rem">
-                <div class="card-header text-white bg-dark border-dark">
-                    <h5>Register</h5>
-                </div>
+        <div class="col-lg-5 col-sm-10">
+            <div class="card shadow" style="margin-top: 4rem">
                 <div class="card-body">
-                    <form [formGroup]="registerForm">
+                    <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
+                        <div class="card-title text-center mb-4">
+                            Join us
+                        </div>
                         <!-- Username -->
                         <div class="form-group">
-                            <label for="usernameInput">Username *</label>
+                            <label for="usernameInput">USERNAME *</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">@</div>
-                                </div>
-                                <input
-                                    class="form-control"
-                                    id="usernameInput"
-                                    placeholder="Choose a Username"
-                                    required
-                                    formControlName="username"
-                                />
+                                <input class="form-control" id="usernameInput" required formControlName="username" />
                             </div>
                             <div *ngIf="registerForm.controls.username.errors?.forbiddenName" class="form-error">
                                 Use this username is not possible
@@ -36,25 +27,12 @@
                                 Minimum length: 4
                             </div>
                         </div>
-                        <!-- Email -->
-                        <!--                        <div class="form-group">-->
-                        <!--                            <label for="emailInput">Email (optional)</label>-->
-                        <!--                            <input-->
-                        <!--                                type="email"-->
-                        <!--                                class="form-control"-->
-                        <!--                                id="emailInput"-->
-                        <!--                                placeholder="Enter your email"-->
-                        <!--                                formControlName="email"-->
-                        <!--                            />-->
-                        <!--                        </div>-->
-                        <!-- Password -->
                         <div class="form-group">
-                            <label for="passwordInput">Password *</label>
+                            <label for="passwordInput">PASSWORD *</label>
                             <input
                                 type="password"
                                 class="form-control"
                                 id="passwordInput"
-                                placeholder="Choose a password"
                                 required
                                 formControlName="password"
                             />
@@ -65,52 +43,46 @@
                                 "
                                 class="form-error"
                             >
-                                Minimum length: 6
+                                Minimum length: 8
                             </div>
                         </div>
                         <!-- Confirm password -->
                         <div class="form-group">
-                            <label for="confirmPasswordInput">Confirm password *</label>
+                            <label for="confirmPasswordInput">CONFIRM PASSWORD *</label>
                             <input
                                 type="password"
                                 class="form-control"
                                 id="confirmPasswordInput"
-                                placeholder="Confirm your password"
                                 required
                                 formControlName="repeat"
                             />
                             <div
                                 *ngIf="
                                     registerForm.controls.repeat.errors?.matchOther &&
-                                    (registerForm.touched || registerForm.dirty)
+                                    (registerForm.touched || registerForm.dirty) &&
+                                    registerForm.value.repeat
                                 "
                                 class="form-error"
                             >
                                 Passwords missmatch !
                             </div>
                         </div>
+                        <div *ngIf="usernameAlreadyTaken" class="username-taken">Username already taken</div>
+                        <button class="submit-btn mt-4" [disabled]="registerForm.invalid">
+                            <span
+                                *ngIf="registerFormSubmitted"
+                                class="spinner-grow spinner-grow-sm mr-2"
+                                role="status"
+                                aria-hidden="true"
+                            ></span
+                            >Register
+                        </button>
+                        <div class="have-account-text mt-2">
+                            Already have an account ? <a routerLink="/login">Login</a>
+                        </div>
                     </form>
                 </div>
                 <!-- card-body -->
-                <div class="card-footer border-dark">
-                    <button type="button" routerLink="/login" class="btn btn-primary">
-                        Login
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-success ml-2"
-                        (click)="onRegisterFormSubmit()"
-                        [disabled]="registerForm.invalid"
-                    >
-                        <span
-                            *ngIf="registerFormSubmitted"
-                            class="spinner-grow spinner-grow-sm"
-                            role="status"
-                            aria-hidden="true"
-                        ></span>
-                        Register
-                    </button>
-                </div>
             </div>
             <!-- card -->
         </div>
