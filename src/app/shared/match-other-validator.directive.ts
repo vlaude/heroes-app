@@ -17,9 +17,7 @@ export function matchOtherValidator(otherControlName: string) {
             thisControl = control;
             otherControl = control.parent.get(otherControlName) as FormControl;
             if (!otherControl) {
-                throw new Error(
-                    'matchOtherValidator(): other control is not found in parent group'
-                );
+                throw new Error('matchOtherValidator(): other control is not found in parent group');
             }
             otherControl.valueChanges.subscribe(() => {
                 thisControl.updateValueAndValidity();

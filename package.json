@@ -10,7 +10,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "heroku-postbuild": "ng build --configuration=production",
-        "prettier": "prettier --config ./.prettierrc --write \"./**/*.ts\" \"./**/*.html\"",
+        "prettier": "prettier --config ./.prettierrc --write \"./**/*.{ts,js,html,css}\"",
         "tslint": "tslint --project . --config ./src/tslint.json --fix --force"
     },
     "engines": {
