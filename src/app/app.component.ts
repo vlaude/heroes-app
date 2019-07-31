@@ -30,4 +30,8 @@ export class AppComponent implements OnInit {
             this.loading = false;
         }
     }
+
+    isAuthenticated(): boolean {
+        return this.authService.isAuthenticated();
+    }
 }
