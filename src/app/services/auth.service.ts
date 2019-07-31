@@ -18,12 +18,8 @@ export class AuthService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser$: Observable<User>;
 
-    constructor(
-        private http: HttpClient,
-        private localStorageService: LocalStorageService,
-        private socketService: SocketService
-    ) {
-        this.currentUserSubject = new BehaviorSubject<User>(this.localStorageService.getCurrentUser());
+    constructor(private http: HttpClient, private socketService: SocketService) {
+        this.currentUserSubject = new BehaviorSubject<User>(LocalStorageService.getCurrentUser());
         this.currentUser$ = this.currentUserSubject.asObservable();
     }
 
@@ -38,7 +34,7 @@ export class AuthService {
                 if (response.token && response.profile) {
                     user = response.profile;
                     user.token = response.token;
-                    this.localStorageService.setCurrentUser(user);
+                    LocalStorageService.setCurrentUser(user);
                     this.currentUserSubject.next(user);
                 }
                 return user;
@@ -50,7 +46,7 @@ export class AuthService {
         if (this.socketService.isConnected()) {
             this.socketService.disconnect();
         }
-        this.localStorageService.logout();
+        LocalStorageService.logout();
         this.currentUserSubject.next(null);
     }
 

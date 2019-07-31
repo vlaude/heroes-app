@@ -4,7 +4,6 @@
             <app-logo class="mr-2"></app-logo>
             <span class="brand">Heroes</span>
         </a>
-        <!--        <span class="navbar-text">( v{{ version }} )</span>-->
     </div>
     <button
         class="navbar-toggler"
@@ -20,7 +19,7 @@
     <div class="collapse navbar-collapse" id="navbarToggler">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <!-- Profile -->
-            <li class="nav-item dropdown" *ngIf="isAuthenticated()">
+            <li class="nav-item dropdown">
                 <a
                     class="nav-link dropdown-toggle username"
                     href="#"
@@ -33,9 +32,9 @@
                     {{ currentUser.username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item disabled">Profile</a>
-                    <a class="dropdown-item disabled">Settings</a>
-                    <div class="dropdown-divider"></div>
+                    <!--                    <a class="dropdown-item disabled">Profile</a>-->
+                    <!--                    <a class="dropdown-item disabled">Settings</a>-->
+                    <!--                    <div class="dropdown-divider"></div>-->
                     <a class="dropdown-item sign-out" (click)="logout()">Deconnexion</a>
                 </div>
             </li>

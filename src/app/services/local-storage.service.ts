@@ -7,15 +7,15 @@ import { User } from '../shared/models/user.model';
 export class LocalStorageService {
     constructor() {}
 
-    setCurrentUser(user: User) {
+    static setCurrentUser(user: User) {
         localStorage.setItem('currentUser', JSON.stringify(user));
     }
 
-    getCurrentUser(): User {
+    static getCurrentUser(): User {
         return JSON.parse(localStorage.getItem('currentUser'));
     }
 
-    logout() {
+    static logout() {
         localStorage.removeItem('currentUser');
     }
 }

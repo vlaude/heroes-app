@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../shared/models/user.model';
@@ -10,7 +9,6 @@ import { User } from '../../shared/models/user.model';
     styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-    public version: string = environment.VERSION;
     currentUser: User;
 
     constructor(private authService: AuthService, private router: Router) {
@@ -22,9 +20,5 @@ export class HeaderComponent implements OnInit {
     logout() {
         this.authService.logout();
         this.router.navigate(['login']);
-    }
-
-    isAuthenticated(): boolean {
-        return this.authService.isAuthenticated();
     }
 }

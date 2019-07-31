@@ -20,7 +20,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     currentUser: User;
     rooms: Room[] = [];
     currentRoom: Room;
-    messages: Message[] = [];
     socketClients: any[];
 
     private unsubscribe: Subject<void> = new Subject();
@@ -36,6 +35,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // Get current user, his conversations, and other connected users.
         this.currentUser = this.authService.currentUserValue;
+        // TODO Resolver for this
         this.userService
             .getUserConversations(this.currentUser.id)
             .pipe(takeUntil(this.unsubscribe))
@@ -56,11 +56,11 @@ export class ChatComponent implements OnInit, OnDestroy {
             .getMessages()
             .pipe(
                 distinctUntilChanged(),
-                throttleTime(500)
+                throttleTime(250)
             )
             .subscribe((message: Message) => {
                 this.addMessageToRoom(message);
-                this.markConvAsNoread(message.room);
+                this.markAsNoread(message.room);
             });
     }
 
@@ -74,7 +74,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     handleRoomSelected = room => {
         this.currentRoom = room;
-        this.markConvAsRead(room);
+        this.markAsRead(room);
     };
 
     handleNewMessage = newMessage => {
@@ -94,15 +94,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     };
 
     handleInputFocus() {
-        this.markConvAsRead(this.currentRoom);
+        this.markAsRead(this.currentRoom);
     }
 
-    markConvAsNoread = (room: Room) => {
+    markAsNoread = (room: Room) => {
         this.currentUser.conversations.find(conv => conv.roomId === room.id).isRead = false;
-        this.titleService.setTitle('(¤) ' + this.titleService.getTitle());
+        this.titleService.setTitle('( ❗ ) ' + this.titleService.getTitle());
     };
 
-    markConvAsRead = (room: Room) => {
+    markAsRead = (room: Room) => {
         const c = this.currentUser.conversations.find(conv => conv.roomId === room.id);
         if (!c.isRead) {
             c.isRead = true;

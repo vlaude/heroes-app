@@ -57,6 +57,10 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         return this.room.messages[msgIndex].poster.username !== this.room.messages[msgIndex - 1].poster.username;
     }
 
+    /**
+     * Indique si on doit afficher le jour au dessus du message.
+     * On l'affiche si c'est le premier message du jour.
+     */
     shouldDisplayDay(message: Message): boolean {
         const msgIndex = this.room.messages.indexOf(message);
         if (msgIndex === 0) {

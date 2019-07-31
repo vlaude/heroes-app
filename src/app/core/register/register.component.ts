@@ -32,7 +32,6 @@ export class RegisterComponent implements OnInit {
                 forbiddenNameValidator(['admin', 'administrator', 'administrateur', 'god', 'root', 'chow', 'vlaude']),
             ],
         ],
-        email: [''],
         password: ['', [Validators.required, Validators.minLength(8)]],
         repeat: ['', [Validators.required, Validators.minLength(8), matchOtherValidator('password')]],
     });
@@ -43,7 +42,6 @@ export class RegisterComponent implements OnInit {
         this.registerFormSubmitted = true;
         const registerUser: RegisterUser = {
             username: this.registerForm.value.username,
-            email: this.registerForm.value.email || null,
             password: this.registerForm.value.password,
         };
         this.userService.registerUser(registerUser).subscribe(
@@ -54,6 +52,7 @@ export class RegisterComponent implements OnInit {
             },
             error => {
                 this.registerFormSubmitted = false;
+                // 409 -> Conflict
                 this.usernameAlreadyTaken = error.status === 409;
                 // this.toastr.error(error.message);
             }
