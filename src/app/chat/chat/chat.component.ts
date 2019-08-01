@@ -93,6 +93,23 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.addMessageToRoom(message);
     };
 
+    handleNewGif = gif => {
+        const message: Message = {
+            date: new Date(),
+            content: '',
+            poster: this.currentUser,
+            room: {
+                id: this.currentRoom.id,
+                name: this.currentRoom.name,
+                messages: [],
+            },
+            attachment: gif,
+        };
+
+        this.socketService.sendMessage(message);
+        this.addMessageToRoom(message);
+    };
+
     handleInputFocus() {
         this.markAsRead(this.currentRoom);
     }

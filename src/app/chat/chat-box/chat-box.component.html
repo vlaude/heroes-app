@@ -35,23 +35,51 @@
                         'chat__messages__el__message--server': ['bbot'].includes(message.poster.username.toLowerCase())
                     }"
                 >
-<!--                    {{ message.content }}-->
+                    <!--                    {{ message.content }}-->
                 </div>
+                <!-- Message attachment -->
+                <img *ngIf="message.attachment" [src]="message.attachment" width="400" />
             </div>
         </div>
     </div>
+
+    <!-- Giphy -->
+    <div *ngIf="displayGiphyBox" class="giphy-box">
+        <input
+            class="giphy-box__input"
+            placeholder="Search for a GIF"
+            (keyup)="$event.keyCode == 13 && searchGif(giphySearchTerm)"
+            [(ngModel)]="giphySearchTerm"
+        />
+        <div *ngIf="giphyLoader" class="giphy-box__loader">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div *ngIf="!giphyLoader" class="giphy-box__results">
+            <div *ngFor="let gif of giphyResults" (click)="sendGif(gif)">
+                <img src="{{ gif.images.downsized_large.url }}" width="290" />
+            </div>
+        </div>
+    </div>
+
     <!--    <div *ngIf="typer" class="typer pl-4 pr-4 pt-1">{{ typer }} is typing...</div>-->
     <!-- chat messages -->
     <div class="input-group p-3">
         <input
             [(ngModel)]="currentMessage"
             (keyup)="$event.keyCode == 13 && sendMessage()"
-            (keydown)="handleKeyDown()"
             (focus)="emitInputFocus()"
             type="text"
             class="form-control chat__input"
             placeholder="Say something"
         />
+        <div class="input-group-append">
+            <button type="button" class="toggle-giphy" (click)="toggleGiphySearch()">GIF</button>
+        </div>
     </div>
     <!-- chat input -->
 </div>

@@ -11,6 +11,7 @@
         <app-chat-box
             [room]="currentRoom"
             (newMessage)="handleNewMessage($event)"
+            (newGif)="handleNewGif($event)"
             (inputFocus)="handleInputFocus()"
         ></app-chat-box>
     </div>

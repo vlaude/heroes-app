@@ -6,4 +6,5 @@ export interface Message {
     content: string;
     poster: User;
     room: Room;
+    attachment?: string;
 }

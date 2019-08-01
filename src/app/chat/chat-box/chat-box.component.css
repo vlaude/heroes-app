@@ -95,3 +95,95 @@
     border: thin solid #1b1b1b;
     color: #e0e0e0;
 }
+
+.giphy-box {
+    background: #eeeeee;
+    border: thin solid #1b1b1b;
+    border-radius: 5px;
+    width: 300px;
+    height: 300px;
+    position: fixed;
+    right: 18vw;
+    bottom: 75px;
+}
+
+.giphy-box__loader {
+    margin-top: 55px;
+    text-align: center;
+}
+
+.giphy-box__input {
+    width: 298px;
+    height: 40px;
+    position: fixed;
+    font-size: 13px;
+    padding-left: 7px;
+    border: thin solid #607d8b;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.giphy-box__results {
+    overflow: auto;
+    height: 225px;
+    margin-top: 40px;
+}
+
+.toggle-giphy {
+    cursor: pointer;
+    background: #1f292e;
+    border: thin solid #1b1b1b;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #e0e0e0;
+    width: 50px;
+    letter-spacing: 0.1em;
+}
+
+.toggle-giphy:hover {
+    background: #1c313a;
+}
+
+.toggle-giphy:focus {
+    outline: none;
+}
+
+/*
+ * Loader
+ */
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 51px;
+    height: 51px;
+    margin: 6px;
+    border: 6px solid #616161;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #616161 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

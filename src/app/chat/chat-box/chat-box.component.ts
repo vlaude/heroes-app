@@ -2,6 +2,7 @@ import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, O
 import { Message } from '../../shared/models/message.model';
 import { Room } from '../../shared/models/room.model';
 import { SocketService } from '../../services/socket.service';
+import Giphy from 'giphy-api';
 
 @Component({
     selector: 'app-chat-box',
@@ -10,11 +11,16 @@ import { SocketService } from '../../services/socket.service';
 })
 export class ChatBoxComponent implements OnInit, AfterViewChecked {
     currentMessage: string;
-    typer = 'henri';
-    typing = false;
-    timeout;
+
+    giphy;
+    displayGiphyBox = false;
+    giphySearchTerm = '';
+    giphyResults = [];
+    giphyLoader = false;
+
     @Input() room: Room;
     @Output() newMessage: EventEmitter<string> = new EventEmitter<string>();
+    @Output() newGif: EventEmitter<string> = new EventEmitter<string>();
     @Output() inputFocus: EventEmitter<any> = new EventEmitter<any>();
 
     // Useful to autoscroll chat
@@ -24,6 +30,8 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
 
     ngOnInit(): void {
         this.socketService.getIsTyping().subscribe(console.log);
+        this.giphy = Giphy();
+        this.loadDefaultGifs();
     }
 
     ngAfterViewChecked(): void {
@@ -36,6 +44,11 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         }
         this.newMessage.emit(this.currentMessage);
         this.currentMessage = '';
+    }
+
+    sendGif(gif) {
+        this.toggleGiphySearch();
+        this.newGif.emit(gif.images.original.url);
     }
 
     /**
@@ -75,24 +88,50 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     }
 
-    handleKeyDown(): void {
-        if (!this.typing) {
-            this.typing = true;
-            this.socketService.sendIsTyping('machin', this.room);
-            this.timeout = setTimeout(() => {
-                this.typing = false;
-                this.socketService.sendHasStopTyping('machin', this.room);
-            }, 3000);
-        } else {
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-                this.typing = false;
-                this.socketService.sendHasStopTyping('machin', this.room);
-            }, 3000);
-        }
-    }
+    // handleKeyDown(): void {
+    //     if (!this.typing) {
+    //         this.typing = true;
+    //         this.socketService.sendIsTyping('machin', this.room);
+    //         this.timeout = setTimeout(() => {
+    //             this.typing = false;
+    //             this.socketService.sendHasStopTyping('machin', this.room);
+    //         }, 3000);
+    //     } else {
+    //         clearTimeout(this.timeout);
+    //         this.timeout = setTimeout(() => {
+    //             this.typing = false;
+    //             this.socketService.sendHasStopTyping('machin', this.room);
+    //         }, 3000);
+    //     }
+    // }
 
     emitInputFocus() {
         this.inputFocus.emit();
+    }
+
+    toggleGiphySearch() {
+        this.displayGiphyBox = !this.displayGiphyBox;
+        if (!this.displayGiphyBox) {
+            this.loadDefaultGifs();
+        }
+    }
+
+    loadDefaultGifs() {
+        this.giphy.trending().then(res => (this.giphyResults = res.data));
+    }
+
+    searchGif(searchTerm) {
+        this.giphyLoader = true;
+        this.giphyResults = [];
+        this.giphy
+            .search({
+                limit: 10,
+                q: searchTerm,
+            })
+            .then(res => {
+                this.giphyLoader = false;
+                this.giphyResults = res.data;
+            })
+            .catch(error => console.log(error));
     }
 }
