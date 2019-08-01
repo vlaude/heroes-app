@@ -30,11 +30,12 @@
                 <!-- Message -->
                 <div
                     class="chat__messages__el__message"
+                    [innerHTML]="message.content"
                     [ngClass]="{
                         'chat__messages__el__message--server': ['bbot'].includes(message.poster.username.toLowerCase())
                     }"
                 >
-                    {{ message.content }}
+<!--                    {{ message.content }}-->
                 </div>
             </div>
         </div>
