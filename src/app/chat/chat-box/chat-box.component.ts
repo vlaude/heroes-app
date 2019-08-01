@@ -3,6 +3,7 @@ import { Message } from '../../shared/models/message.model';
 import { Room } from '../../shared/models/room.model';
 import { SocketService } from '../../services/socket.service';
 import Giphy from 'giphy-api';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
     selector: 'app-chat-box',
@@ -30,7 +31,9 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
 
     ngOnInit(): void {
         this.socketService.getIsTyping().subscribe(console.log);
-        this.giphy = Giphy();
+        this.giphy = Giphy({
+            https: environment.production
+        });
         this.loadDefaultGifs();
     }
 
