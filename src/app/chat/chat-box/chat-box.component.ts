@@ -116,6 +116,7 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         this.displayGiphyBox = !this.displayGiphyBox;
         if (!this.displayGiphyBox) {
             this.loadDefaultGifs();
+            this.giphySearchTerm = '';
         }
     }
 
@@ -128,7 +129,7 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         this.giphyResults = [];
         this.giphy
             .search({
-                limit: 10,
+                limit: 25,
                 q: searchTerm,
             })
             .then(res => {
